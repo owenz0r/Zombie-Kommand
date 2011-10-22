@@ -4,16 +4,19 @@
 #include "Entity.h"
 
 enum tile_type{
-	none,
-	impassable
+	none = 0,
+	impassable = 1
 };
 
 class Tile{
-	Tile(float x, float y, tile_type type);
-
 	tile_type type;
 	float2 pos;
 	Entity *occupants;
+
+public:
+	Tile(float x, float y, tile_type type);
+	int getType();
+	
 };
 
 #endif

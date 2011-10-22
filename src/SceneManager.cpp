@@ -95,7 +95,7 @@ bool SceneManager::drawScene(){
 
 	for(int i=0; i < level->getSizeY(); i++){
 		for(int j=0; j < level->getSizeX(); j++)
-			applySurface(j*TILESIZE, i*TILESIZE, sprites[level->getTileIDs()[i][j]]->getSprite());
+			applySurface(j*TILESIZE, i*TILESIZE, sprites[level->getTiles()[i][j]->getType()]->getSprite());
 	}
 
 	return true;

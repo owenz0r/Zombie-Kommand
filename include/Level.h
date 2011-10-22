@@ -2,9 +2,10 @@
 #define LEVEL_H
 
 #include <string>
+#include "Tile.h"
 
 class Level{
-	char **tileIDs;
+	Tile ***tiles;
 	char spriteIDs[8];
 	int sizex;
 	int sizey;
@@ -12,7 +13,7 @@ class Level{
 public:
 	Level(std::string f);
 	char* getSpriteIDs();
-	char** getTileIDs();
+	Tile*** getTiles();
 	int getSizeX();
 	int getSizeY();
 };

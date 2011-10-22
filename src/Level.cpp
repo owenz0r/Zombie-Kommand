@@ -23,11 +23,13 @@ Level::Level(std::string f){
 
 	// parse
 	int i=0;
-	tileIDs = new char*[count];
+	tiles = new Tile**[count];
 	while( getline( file, line ) != NULL ){
-		tileIDs[i] = new char[line.size()];
-		for(int j=0; j < line.size(); j++)
-			tileIDs[i][j] = line.at(j) - '0';
+		tiles[i] = new Tile*[line.size()];
+		for(unsigned int j=0; j < line.size(); j++){
+			tile_type type = (tile_type)(line.at(j) - '0');
+			tiles[i][j] = new Tile(i, j, type);
+		}
 		i++;
 	}
 
@@ -38,7 +40,7 @@ Level::Level(std::string f){
 	memset(spriteIDs, 0, 8);
 	for(int j=0; j < sizey; j++){
 		for(int k=0; k < sizex; k++)
-			spriteIDs[tileIDs[j][k]] = 1;
+			spriteIDs[tiles[j][k]->getType()] = 1;
 	}
 }
 
@@ -46,8 +48,8 @@ char* Level::getSpriteIDs(){
 	return spriteIDs;
 }
 
-char** Level::getTileIDs(){
-	return tileIDs;
+Tile*** Level::getTiles(){
+	return tiles;
 }
 
 int Level::getSizeX(){
