@@ -2,6 +2,7 @@
 #define TILE_H
 
 #include "Entity.h"
+#include <vector>
 
 enum tile_type{
 	none = 0,
@@ -11,12 +12,15 @@ enum tile_type{
 class Tile{
 	tile_type type;
 	float2 pos;
-	Entity *occupants;
+	std::vector<Entity*> occupants;
 
 public:
 	Tile(float x, float y, tile_type type);
 	int getType();
-	
+	Entity** getOccupants();
+	int addOccupant(Entity* e);
+	int removeOccupant(Entity* e);
+	bool getIsOccupied();
 };
 
 #endif
