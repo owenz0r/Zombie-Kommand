@@ -3,6 +3,7 @@
 
 #include "SDL.h"
 #include "globals.h"
+#include <vector>
 
 // forward declarations
 class SceneManager;
@@ -18,7 +19,7 @@ class Engine{
 	SDL_Event current_event;
 	SceneManager *current_scene;
 	Player *player;
-	Mob *mob;
+	std::vector<Mob*> mobs;
 	Avatar *characters[MAXCHARACTERS];
 	Entity *entities[MAXENTITIES];
 	int num_entities;

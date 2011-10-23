@@ -25,7 +25,10 @@ Engine::Engine(){
 		current_scene = new SceneManager(this, screen);
 
 	player = new Player(this, "C:\\dev\\games\\media\\guy.png", TILESIZE*10, TILESIZE*10);
-	mob = new Mob(this, "C:\\dev\\games\\media\\zombie.png");
+
+	mobs = std::vector<Mob*>();
+	for(int i=0; i < 30; i++)
+		mobs.push_back( new Mob(this, "C:\\dev\\games\\media\\zombie.png", TILESIZE*0, TILESIZE*i) );
 }
 
 void Engine::Shutdown(){
@@ -81,7 +84,8 @@ void Engine::Run(){
 		// Draw the scene
 		current_scene->drawScene();
 		current_scene->drawPlayer(player);
-		current_scene->drawMob(mob);
+		for(int i=0; i < mobs.size(); i++)
+			current_scene->drawMob(mobs[i]);
 
 		SDL_Flip( screen );
     }
