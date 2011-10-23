@@ -20,6 +20,7 @@ void Mob::translateX(int x){
 		stepx = (dest->x - pos->x) / 1000;
 		stepy = 0.0f;
 		moving = true;
+		engine->getSceneManager()->updateOccupancy(this);
 	}
 }
 
@@ -30,6 +31,7 @@ void Mob::translateY(int y){
 		stepx = 0.0f;
 		stepy = (dest->y - pos->y) / 1000;
 		moving = true;
+		engine->getSceneManager()->updateOccupancy(this);
 	}
 }
 

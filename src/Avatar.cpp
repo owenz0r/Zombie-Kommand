@@ -8,21 +8,25 @@ Avatar::Avatar(Engine *e, std::string filename, int x, int y) : Entity(e,x,y), D
 }
 
 void Avatar::translateX(int x){
-	moving = true;
 	dest->x = pos->x + x;
 	dest->y = pos->y;
-	stepx = (dest->x - pos->x) / 1000;
-	stepy = 0.0f;
-	engine->getSceneManager()->updateOccupancy(this);
+	if( engine->getSceneManager()->canMoveTo(dest->x, dest->y) ){
+		stepx = (dest->x - pos->x) / 1000;
+		stepy = 0.0f;
+		moving = true;
+		engine->getSceneManager()->updateOccupancy(this);
+	}
 }
 
 void Avatar::translateY(int y){
-	moving = true;
 	dest->x = pos->x;
 	dest->y = pos->y + y;
-	stepx = 0.0f;
-	stepy = (dest->y - pos->y) / 1000;
-	engine->getSceneManager()->updateOccupancy(this);
+	if( engine->getSceneManager()->canMoveTo(dest->x, dest->y) ){
+		stepx = 0.0f;
+		stepy = (dest->y - pos->y) / 1000;
+		moving = true;
+		engine->getSceneManager()->updateOccupancy(this);
+	}
 }
 
 void Avatar::moveTo(int x, int y){
