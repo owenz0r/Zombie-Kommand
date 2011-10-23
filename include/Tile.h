@@ -20,7 +20,7 @@ public:
 	Entity** getOccupants();
 	int addOccupant(Entity* e);
 	int removeOccupant(Entity* e);
-	bool getIsOccupied();
+	bool isOccupied();
 };
 
 #endif

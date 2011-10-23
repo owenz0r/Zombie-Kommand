@@ -9,7 +9,7 @@ enum State{
 	wander
 };
 
-class Mob : public Drawable, public Moveable {
+class Mob : public Entity, public Drawable, public Moveable {
 	int health;
 	float speed;
 	State current_state;

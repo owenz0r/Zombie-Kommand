@@ -1,7 +1,7 @@
 #include "Drawable.h"
 #include "SDL_image.h"
 
-Drawable::Drawable(Engine *e, std::string filename, int x, int y) : Entity(e,x,y) {
+Drawable::Drawable(std::string filename) {
 
 	sprite = loadSprite( filename );
 }

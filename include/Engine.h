@@ -35,7 +35,10 @@ public:
 	void addEntity(Entity* e);
 	void addCharacter(Avatar *a);
 	Avatar** getCharacters();
+	Entity** getEntities();
+	int getNumEntities();
 	int getNumCharacters();
+	SceneManager* getSceneManager();
 };
 
 #endif

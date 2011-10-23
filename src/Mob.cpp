@@ -1,10 +1,12 @@
 #include "Mob.h"
 #include "Avatar.h"
 #include "globals.h"
+#include "SceneManager.h"
 #include <math.h>
 
 
-Mob::Mob(Engine *e, std::string filename, int x, int y) : Drawable(e, filename, x, y){
+Mob::Mob(Engine *e, std::string filename, int x, int y) : Entity(e,x,y), Drawable(filename){
+	dest = new float2();
 	moving = false;
 	speed = 1.0f;
 	current_state = seek;
@@ -12,19 +14,23 @@ Mob::Mob(Engine *e, std::string filename, int x, int y) : Drawable(e, filename, 
 }
 
 void Mob::translateX(int x){
-	moving = true;
-	destx = pos->x + x;
-	desty = pos->y;
-	stepx = (destx - pos->x) / 1000;
-	stepy = 0.0f;
+	dest->x = pos->x + x;
+	dest->y = pos->y;
+	if( engine->getSceneManager()->canMoveTo(dest->x, dest->y) ){
+		stepx = (dest->x - pos->x) / 1000;
+		stepy = 0.0f;
+		moving = true;
+	}
 }
 
 void Mob::translateY(int y){
-	moving = true;
-	destx = pos->x;
-	desty = pos->y + y;
-	stepx = 0.0f;
-	stepy = (desty - pos->y) / 1000;
+	dest->x = pos->x;
+	dest->y = pos->y + y;
+	if( engine->getSceneManager()->canMoveTo(dest->x, dest->y) ){
+		stepx = 0.0f;
+		stepy = (dest->y - pos->y) / 1000;
+		moving = true;
+	}
 }
 
 void Mob::moveTo(int x, int y){
@@ -102,13 +108,13 @@ void Mob::Update(Uint32 time){
 		// check if we've overshot our target position and explicitly set 
 		// our current position if we have
 		if( stepx > 0.0f || stepy > 0.0f ){
-			if( pos->x >= destx && pos->y >= desty ){
-				moveTo(destx,desty);
+			if( pos->x >= dest->x && pos->y >= dest->y ){
+				moveTo(dest->x,dest->y);
 				moving = false;
 			}
 		} else {
-			if( pos->x <= destx && pos->y <= desty ){
-				moveTo(destx,desty);
+			if( pos->x <= dest->x && pos->y <= dest->y ){
+				moveTo(dest->x,dest->y);
 				moving = false;
 			}
 		}

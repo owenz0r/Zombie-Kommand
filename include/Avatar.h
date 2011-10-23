@@ -4,7 +4,7 @@
 #include "Drawable.h"
 #include "Moveable.h"
 
-class Avatar : public Drawable, public Moveable{
+class Avatar : public Entity, public Drawable, public Moveable{
 	int health;
 	float speed;
 public:

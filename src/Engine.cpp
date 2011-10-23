@@ -95,3 +95,15 @@ void Engine::addEntity(Entity *e){
 void Engine::addCharacter(Avatar *a){
 	characters[num_characters++] = a;
 }
+
+Entity** Engine::getEntities(){
+	return entities;
+}
+
+int Engine::getNumEntities(){
+	return num_entities;
+}
+
+SceneManager* Engine::getSceneManager(){
+	return current_scene;
+}

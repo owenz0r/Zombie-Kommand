@@ -4,6 +4,7 @@ Tile::Tile(float x, float y, tile_type type){
 	this->pos.x = x;
 	this->pos.y = y;
 	this->type = type;
+	this->occupants = std::vector<Entity*>();
 }
 
 int Tile::getType(){
@@ -28,7 +29,7 @@ int Tile::removeOccupant(Entity* e){
 	return 1;
 }
 
-bool Tile::getIsOccupied(){
+bool Tile::isOccupied(){
 	if( this->occupants.size() > 0 ){
 		return true;
 	} else {

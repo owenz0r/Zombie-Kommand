@@ -1,24 +1,28 @@
 #include "Avatar.h"
+#include "SceneManager.h"
 
-Avatar::Avatar(Engine *e, std::string filename, int x, int y) : Drawable(e, filename, x, y){
+Avatar::Avatar(Engine *e, std::string filename, int x, int y) : Entity(e,x,y), Drawable(filename){
+	dest = new float2();
 	moving = false;
 	speed = 3.0f;
 }
 
 void Avatar::translateX(int x){
 	moving = true;
-	destx = pos->x + x;
-	desty = pos->y;
-	stepx = (destx - pos->x) / 1000;
+	dest->x = pos->x + x;
+	dest->y = pos->y;
+	stepx = (dest->x - pos->x) / 1000;
 	stepy = 0.0f;
+	engine->getSceneManager()->updateOccupancy(this);
 }
 
 void Avatar::translateY(int y){
 	moving = true;
-	destx = pos->x;
-	desty = pos->y + y;
+	dest->x = pos->x;
+	dest->y = pos->y + y;
 	stepx = 0.0f;
-	stepy = (desty - pos->y) / 1000;
+	stepy = (dest->y - pos->y) / 1000;
+	engine->getSceneManager()->updateOccupancy(this);
 }
 
 void Avatar::moveTo(int x, int y){
@@ -35,14 +39,16 @@ void Avatar::Update(Uint32 time){
 		pos->x += time * stepx * speed;
 		pos->y += time * stepy * speed;
 
+		// if we're moving in positive direction
 		if( stepx > 0.0f || stepy > 0.0f ){
-			if( pos->x >= destx && pos->y >= desty ){
-				moveTo(destx,desty);
+			// if we've reached the destination
+			if( pos->x >= dest->x && pos->y >= dest->y ){
+				moveTo(dest->x,dest->y);
 				moving = false;
 			}
 		} else {
-			if( pos->x <= destx && pos->y <= desty ){
-				moveTo(destx,desty);
+			if( pos->x <= dest->x && pos->y <= dest->y ){
+				moveTo(dest->x,dest->y);
 				moving = false;
 			}
 		}

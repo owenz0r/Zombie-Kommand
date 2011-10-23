@@ -81,7 +81,7 @@ bool SceneManager::loadScene(){
 	char* level_sprites = level->getSpriteIDs();
 	for(int i=0; i < 8; i++){
 		if( level_sprites[i] == 1 ){
-			sprites[i] = new Drawable(engine, tmp.append(tiles[i]) );
+			sprites[i] = new Drawable(tmp.append(tiles[i]) );
 			tmp = "C:\\dev\\games\\media\\";
 			num_sprites++;
 		}
@@ -99,4 +99,31 @@ bool SceneManager::drawScene(){
 	}
 
 	return true;
+}
+
+
+
+void SceneManager::Update(Uint32 time){
+
+}
+
+// update the tiles for who's where
+// this seems really ugly, there's gotta be a better way
+void SceneManager::updateOccupancy(Moveable* m){
+	
+	if( Entity* e = dynamic_cast<Entity*>(m) ){
+		Tile*** tiles = level->getTiles();
+		
+		int x = e->getPos()->x / TILESIZE;
+		int y = e->getPos()->y / TILESIZE;
+		tiles[x][y]->removeOccupant(e);
+		
+		x = m->getDest()->x / TILESIZE;
+		y = m->getDest()->y / TILESIZE;
+		tiles[x][y]->addOccupant(e);
+	}
+}
+
+bool SceneManager::canMoveTo(int x, int y){
+	return !level->getTiles()[x / TILESIZE][y / TILESIZE]->isOccupied();
 }
