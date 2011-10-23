@@ -116,14 +116,18 @@ void SceneManager::updateOccupancy(Moveable* m){
 		
 		int x = e->getPos()->x / TILESIZE;
 		int y = e->getPos()->y / TILESIZE;
-		tiles[x][y]->removeOccupant(e);
+		tiles[y][x]->removeOccupant(e);
 		
 		x = m->getDest()->x / TILESIZE;
 		y = m->getDest()->y / TILESIZE;
-		tiles[x][y]->addOccupant(e);
+		tiles[y][x]->addOccupant(e);
 	}
 }
 
 bool SceneManager::canMoveTo(int x, int y){
-	return !level->getTiles()[x / TILESIZE][y / TILESIZE]->isOccupied();
+	if( level->getTiles()[y / TILESIZE][x / TILESIZE]->isOccupied() )
+		return false;
+	if( level->getTiles()[y / TILESIZE][x / TILESIZE]->getType() == tile_type::impassable )
+		return false;
+	return true;
 }
