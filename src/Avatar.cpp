@@ -7,7 +7,7 @@ Avatar::Avatar(Engine *e, std::string filename, int x, int y) : Entity(e,x,y), D
 	speed = 3.0f;
 }
 
-void Avatar::translateX(int x){
+bool Avatar::translateX(int x){
 	dest->x = pos->x + x;
 	dest->y = pos->y;
 	if( engine->getSceneManager()->canMoveTo(dest->x, dest->y) ){
@@ -16,9 +16,10 @@ void Avatar::translateX(int x){
 		moving = true;
 		engine->getSceneManager()->updateOccupancy(this);
 	}
+	return moving;
 }
 
-void Avatar::translateY(int y){
+bool Avatar::translateY(int y){
 	dest->x = pos->x;
 	dest->y = pos->y + y;
 	if( engine->getSceneManager()->canMoveTo(dest->x, dest->y) ){
@@ -27,6 +28,7 @@ void Avatar::translateY(int y){
 		moving = true;
 		engine->getSceneManager()->updateOccupancy(this);
 	}
+	return moving;
 }
 
 void Avatar::moveTo(int x, int y){

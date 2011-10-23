@@ -11,8 +11,8 @@ protected:
 public:
 	
 	virtual ~Moveable(){};
-	virtual void translateX(int x) = 0;
-	virtual void translateY(int y) = 0;
+	virtual bool translateX(int x) = 0;
+	virtual bool translateY(int y) = 0;
 	// explicitly set position
 	virtual void moveTo(int x, int y) = 0;
 	virtual void animateTo(int x, int y) = 0;

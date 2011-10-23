@@ -13,7 +13,7 @@ Mob::Mob(Engine *e, std::string filename, int x, int y) : Entity(e,x,y), Drawabl
 	e->addEntity(this);
 }
 
-void Mob::translateX(int x){
+bool Mob::translateX(int x){
 	dest->x = pos->x + x;
 	dest->y = pos->y;
 	if( engine->getSceneManager()->canMoveTo(dest->x, dest->y) ){
@@ -22,9 +22,10 @@ void Mob::translateX(int x){
 		moving = true;
 		engine->getSceneManager()->updateOccupancy(this);
 	}
+	return moving;
 }
 
-void Mob::translateY(int y){
+bool Mob::translateY(int y){
 	dest->x = pos->x;
 	dest->y = pos->y + y;
 	if( engine->getSceneManager()->canMoveTo(dest->x, dest->y) ){
@@ -33,6 +34,7 @@ void Mob::translateY(int y){
 		moving = true;
 		engine->getSceneManager()->updateOccupancy(this);
 	}
+	return moving;
 }
 
 void Mob::moveTo(int x, int y){
@@ -76,19 +78,48 @@ void Mob::seekBehavior(Uint32 time){
 	dir = dir->normalize();
 
 	// move
+	// this is really messy, need to rewrite
 	// if length of dir is very small then we're probably on the destination tile
 	if ( dir->getLength() > 0.001 ){
+		// find which direction gets us closest to our destination
 		if( abs(dir->x) > abs(dir->y) ){
+			// are we moving positive or negative?
 			if( dir->x > 0 ){
-				translateX(1*TILESIZE);
+				// try to move, if we can't, try other axis
+				if( !translateX(1*TILESIZE) ){
+					// pos or neg
+					if( dir->y > 0 ){
+						translateY(1*TILESIZE);
+					} else {
+						translateY(-1*TILESIZE);
+					}
+				}
 			} else {
-				translateX(-1*TILESIZE);
+				if( !translateX(-1*TILESIZE) ){
+					if( dir->y > 0 ){
+						translateY(1*TILESIZE);
+					} else {
+						translateY(-1*TILESIZE);
+					}
+				}
 			}
 		} else {
 			if( dir->y > 0 ){
-				translateY(1*TILESIZE);
+				if( !translateY(1*TILESIZE) ){
+					if( dir->x > 0 ){
+						translateX(1*TILESIZE);
+					} else {
+						translateX(-1*TILESIZE);
+					}
+				}
 			} else {
-				translateY(-1*TILESIZE);
+				if( !translateY(-1*TILESIZE) ){
+					if( dir->x > 0 ){
+						translateX(1*TILESIZE);
+					} else {
+						translateX(-1*TILESIZE);
+					}
+				}
 			}
 		}
 	}

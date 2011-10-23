@@ -15,8 +15,8 @@ class Mob : public Entity, public Drawable, public Moveable {
 	State current_state;
 public:
 	Mob(Engine *e, std::string filename, int x=0, int y=0);
-	virtual void translateX(int x);
-	virtual void translateY(int y);
+	virtual bool translateX(int x);
+	virtual bool translateY(int y);
 	virtual void moveTo(int x, int y);
 	virtual void animateTo(int x, int y);
 	virtual void Update(Uint32 time);
