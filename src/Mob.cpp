@@ -14,6 +14,7 @@ Mob::Mob(Engine *e, std::string filename, int x, int y) : Entity(e,x,y), Drawabl
 	speed = 1.0f;
 	current_state = seek;
 	e->addEntity(this);
+	awareness = 10;
 	srand( time(NULL) );
 }
 
@@ -73,8 +74,9 @@ void Mob::seekBehavior(Uint32 time){
 	float2* tmp = characters[id]->getPos();
 	// vector to nearest avatar
 
+	// only chase if character is within awareness range
 	float2 *toTarget = new float2();
-	if( closest < TILESIZE*10 ){
+	if( closest < TILESIZE*this->awareness ){
 		toTarget = pos->vectorTo(tmp->x, tmp->y);
 		toTarget = toTarget->normalize();
 	}

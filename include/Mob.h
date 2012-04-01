@@ -13,6 +13,7 @@ class Mob : public Entity, public Drawable, public Moveable {
 	int health;
 	float speed;
 	State current_state;
+	int awareness;
 public:
 	Mob(Engine *e, std::string filename, int x=0, int y=0);
 	virtual bool translateX(int x);
