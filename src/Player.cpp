@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "SceneManager.h"
 
 Player::Player(Engine *e, std::string filename, int x, int y){
 
@@ -6,6 +7,7 @@ Player::Player(Engine *e, std::string filename, int x, int y){
 	avatar = new Avatar(e, filename, x, y);
 	e->addEntity(avatar);
 	e->addCharacter(avatar);
+	e->getSceneManager()->getLevel()->getTiles()[y/TILESIZE][x/TILESIZE]->addOccupant(avatar);
 }
 
 void Player::keyPressed(SDL_Event &e){
