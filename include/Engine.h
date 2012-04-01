@@ -40,6 +40,7 @@ public:
 	int getNumEntities();
 	int getNumCharacters();
 	SceneManager* getSceneManager();
+	std::vector<Mob*> getMobs();
 };
 
 #endif

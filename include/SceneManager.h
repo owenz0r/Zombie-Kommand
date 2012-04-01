@@ -25,6 +25,7 @@ public:
 	void Update(Uint32 time);
 	void updateOccupancy(Moveable* e);
 	bool canMoveTo(int x, int y);
+	Level* getLevel();
 };
 
 #endif

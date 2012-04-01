@@ -125,9 +125,15 @@ void SceneManager::updateOccupancy(Moveable* m){
 }
 
 bool SceneManager::canMoveTo(int x, int y){
+	if( x < 0 || y < 0 || x >= level->getSizeX()*TILESIZE || y >= level->getSizeY()*TILESIZE )
+		return false;
 	if( level->getTiles()[y / TILESIZE][x / TILESIZE]->isOccupied() )
 		return false;
 	if( level->getTiles()[y / TILESIZE][x / TILESIZE]->getType() == tile_type::impassable )
 		return false;
 	return true;
+}
+
+Level* SceneManager::getLevel(){
+	return level;
 }

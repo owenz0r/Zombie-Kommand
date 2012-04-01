@@ -59,3 +59,13 @@ int Level::getSizeX(){
 int Level::getSizeY(){
 	return sizey;
 }
+
+void Level::printTileInfo(){
+	std::cout << "-----------------------" << std::endl;
+	for( int i=0; i < sizex; i++ ){
+		for( int j=0; j <sizey; j++){
+			if( tiles[j][i]->isOccupied() )
+				std::cout << "(" << i << "," << j << ")" << std::endl;
+		}
+	}
+}

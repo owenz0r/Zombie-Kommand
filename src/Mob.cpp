@@ -2,7 +2,10 @@
 #include "Avatar.h"
 #include "globals.h"
 #include "SceneManager.h"
+//#include "Tile.h"
 #include <math.h>
+#include <stdlib.h>
+#include <time.h>
 
 
 Mob::Mob(Engine *e, std::string filename, int x, int y) : Entity(e,x,y), Drawable(filename){
@@ -11,6 +14,7 @@ Mob::Mob(Engine *e, std::string filename, int x, int y) : Entity(e,x,y), Drawabl
 	speed = 1.0f;
 	current_state = seek;
 	e->addEntity(this);
+	srand( time(NULL) );
 }
 
 bool Mob::translateX(int x){
@@ -46,6 +50,7 @@ void Mob::animateTo(int x, int y){
 
 }
 
+
 void Mob::seekBehavior(Uint32 time){
 
 	Avatar** characters = engine->getCharacters();
@@ -59,70 +64,82 @@ void Mob::seekBehavior(Uint32 time){
 		float2 *diff = pos->vectorTo(charPos);
 		float dist = diff->getLength();
 
-		/*
-		float diffx = characters[i]->getX() - pos->x;
-		float diffy = characters[i]->getY() - pos->y;
-		float dist = sqrt((diffx*diffx) + (diffy*diffy));
-		*/
-
 		if( dist < closest ){
 			closest = dist;
 			id = i;
 		}
 	}
 
+	float2* tmp = characters[id]->getPos();
 	// vector to nearest avatar
-	float2 *dir = pos->vectorTo(characters[id]->getPos());
 
+	float2 *toTarget = new float2();
+	if( closest < TILESIZE*10 ){
+		toTarget = pos->vectorTo(tmp->x, tmp->y);
+		toTarget = toTarget->normalize();
+	}
+
+	//////
+	// check surrounding area for other mobs
+	/////
+
+	//std::vector<Mob*> otherMobs = engine->getSceneManager()->g;
+	Level* level = engine->getSceneManager()->getLevel();
+	Tile*** tiles = level->getTiles();
+	float2* surroundingMobs = new float2();
+	
+	for( int i=-1; i < 2; i++ ){
+		int x = (this->pos->x / TILESIZE) + i;
+		if( x < 0 || x > level->getSizeX()-1 )
+			continue;
+		for( int j=-1; j < 2; j++){
+			int y = (this->pos->y / TILESIZE) + j;
+			if( y < 0 || y > level->getSizeY()-1 )
+				continue;
+			std::vector<Entity*> occupants = tiles[y][x]->getOccupants();
+			if( occupants.size() > 0 ){
+				float2* vec = this->pos->vectorTo(occupants[0]->getPos());
+				surroundingMobs->x += vec->x;
+				surroundingMobs->y += vec->y;
+			}
+		}
+	}
+	
+	if( surroundingMobs->getLength() > 0.0f ){
+		surroundingMobs->x *= -1;
+		surroundingMobs->y *= -1;
+		surroundingMobs = surroundingMobs->normalize();
+	}
+	
+
+	float2 *dir = new float2();
+	dir->x = surroundingMobs->x + toTarget->x;
+	dir->y = surroundingMobs->y + toTarget->y;
+	
 	// normalize
 	dir = dir->normalize();
 
-	// move
-	// this is really messy, need to rewrite
-	// if length of dir is very small then we're probably on the destination tile
 	if ( dir->getLength() > 0.001 ){
 		// find which direction gets us closest to our destination
 		if( abs(dir->x) > abs(dir->y) ){
 			// are we moving positive or negative?
 			if( dir->x > 0 ){
 				// try to move, if we can't, try other axis
-				if( !translateX(1*TILESIZE) ){
-					// pos or neg
-					if( dir->y > 0 ){
-						translateY(1*TILESIZE);
-					} else {
-						translateY(-1*TILESIZE);
-					}
-				}
+				translateX(1*TILESIZE);
 			} else {
-				if( !translateX(-1*TILESIZE) ){
-					if( dir->y > 0 ){
-						translateY(1*TILESIZE);
-					} else {
-						translateY(-1*TILESIZE);
-					}
-				}
+				translateX(-1*TILESIZE);
 			}
 		} else {
 			if( dir->y > 0 ){
-				if( !translateY(1*TILESIZE) ){
-					if( dir->x > 0 ){
-						translateX(1*TILESIZE);
-					} else {
-						translateX(-1*TILESIZE);
-					}
-				}
+				translateY(1*TILESIZE);
 			} else {
-				if( !translateY(-1*TILESIZE) ){
-					if( dir->x > 0 ){
-						translateX(1*TILESIZE);
-					} else {
-						translateX(-1*TILESIZE);
-					}
-				}
+				translateY(-1*TILESIZE);
 			}
 		}
 	}
+	
+
+	
 
 }
 

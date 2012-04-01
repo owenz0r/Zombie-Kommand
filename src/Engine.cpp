@@ -2,6 +2,10 @@
 #include "SceneManager.h"
 #include "Player.h"
 #include "Mob.h"
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 // TEMPORARY HOLDING //
 int xpos = 20;
@@ -26,9 +30,22 @@ Engine::Engine(){
 
 	player = new Player(this, "C:\\dev\\games\\media\\guy.png", TILESIZE*10, TILESIZE*10);
 
+	srand( time(NULL) );
+
+	Tile*** tiles = current_scene->getLevel()->getTiles();
 	mobs = std::vector<Mob*>();
-	for(int i=0; i < 30; i++)
-		mobs.push_back( new Mob(this, "C:\\dev\\games\\media\\zombie.png", TILESIZE*0, TILESIZE*i) );
+	for(int i=0; i < 300; i++){
+		
+		int x = rand() % current_scene->getLevel()->getSizeX();
+		int y = rand() % current_scene->getLevel()->getSizeY();
+		
+		if( !tiles[y][x]->isOccupied() ){
+			Mob* mob = new Mob(this, "C:\\dev\\games\\media\\zombie.png", TILESIZE*x, TILESIZE*y);
+			tiles[y][x]->addOccupant(mob);
+			//current_scene->updateOccupancy(mob);
+			mobs.push_back( mob );
+		}
+	}
 }
 
 void Engine::Shutdown(){
@@ -88,6 +105,8 @@ void Engine::Run(){
 			current_scene->drawMob(mobs[i]);
 
 		SDL_Flip( screen );
+		//current_scene->getLevel()->printTileInfo();
+
     }
 	Shutdown();
 }
@@ -110,4 +129,8 @@ int Engine::getNumEntities(){
 
 SceneManager* Engine::getSceneManager(){
 	return current_scene;
+}
+
+std::vector<Mob*> Engine::getMobs(){
+	return mobs;
 }

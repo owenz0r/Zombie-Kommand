@@ -36,3 +36,7 @@ bool Tile::isOccupied(){
 		return false;
 	}
 }
+
+std::vector<Entity*> Tile::getOccupants(){
+	return occupants;
+}

@@ -16,6 +16,7 @@ public:
 	Tile*** getTiles();
 	int getSizeX();
 	int getSizeY();
+	void printTileInfo();
 };
 
 #endif
