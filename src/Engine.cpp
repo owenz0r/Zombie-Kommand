@@ -34,7 +34,7 @@ Engine::Engine(){
 
 	Tile*** tiles = current_scene->getLevel()->getTiles();
 	mobs = std::vector<Mob*>();
-	for(int i=0; i < 300; i++){
+	for(int i=0; i < 0; i++){
 		
 		int x = rand() % current_scene->getLevel()->getSizeX();
 		int y = rand() % current_scene->getLevel()->getSizeY();

@@ -13,10 +13,11 @@ class Level{
 public:
 	Level(std::string f);
 	char* getSpriteIDs();
-	Tile*** getTiles();
+	//Tile*** getTiles();
 	int getSizeX();
 	int getSizeY();
 	void printTileInfo();
+	Tile* tileAt(int x, int y);
 };
 
 #endif

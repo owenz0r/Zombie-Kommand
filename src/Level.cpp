@@ -47,10 +47,11 @@ Level::Level(std::string f){
 char* Level::getSpriteIDs(){
 	return spriteIDs;
 }
-
+/*
 Tile*** Level::getTiles(){
 	return tiles;
 }
+*/
 
 int Level::getSizeX(){
 	return sizex;
@@ -58,6 +59,10 @@ int Level::getSizeX(){
 
 int Level::getSizeY(){
 	return sizey;
+}
+
+Tile* Level::tileAt(int x, int y){
+	return this->tiles[y][x];
 }
 
 void Level::printTileInfo(){
