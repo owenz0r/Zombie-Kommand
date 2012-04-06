@@ -87,7 +87,7 @@ void Mob::seekBehavior(Uint32 time){
 
 	//std::vector<Mob*> otherMobs = engine->getSceneManager()->g;
 	Level* level = engine->getSceneManager()->getLevel();
-	Tile*** tiles = level->getTiles();
+	//Tile*** tiles = level->getTiles();
 	float2* surroundingMobs = new float2();
 	
 	for( int i=-1; i < 2; i++ ){
@@ -98,7 +98,7 @@ void Mob::seekBehavior(Uint32 time){
 			int y = (this->pos->y / TILESIZE) + j;
 			if( y < 0 || y > level->getSizeY()-1 )
 				continue;
-			std::vector<Entity*> occupants = tiles[y][x]->getOccupants();
+			std::vector<Entity*> occupants = level->tileAt(x,y)->getOccupants();
 			if( occupants.size() > 0 ){
 				float2* vec = this->pos->vectorTo(occupants[0]->getPos());
 				surroundingMobs->x += vec->x;

@@ -93,9 +93,16 @@ bool SceneManager::loadScene(){
 
 bool SceneManager::drawScene(){
 
+	/*
 	for(int i=0; i < level->getSizeY(); i++){
 		for(int j=0; j < level->getSizeX(); j++)
 			applySurface(j*TILESIZE, i*TILESIZE, sprites[level->getTiles()[i][j]->getType()]->getSprite());
+	}
+	*/
+
+	for(int i=0; i < level->getSizeX(); i++){
+		for(int j=0; j < level->getSizeY(); j++)
+			applySurface(i*TILESIZE, j*TILESIZE, sprites[level->tileAt(i,j)->getType()]->getSprite());
 	}
 
 	return true;
@@ -112,24 +119,24 @@ void SceneManager::Update(Uint32 time){
 void SceneManager::updateOccupancy(Moveable* m){
 	
 	if( Entity* e = dynamic_cast<Entity*>(m) ){
-		Tile*** tiles = level->getTiles();
+		//Tile*** tiles = level->getTiles();
 		
 		int x = e->getPos()->x / TILESIZE;
 		int y = e->getPos()->y / TILESIZE;
-		tiles[y][x]->removeOccupant(e);
+		level->tileAt(x,y)->removeOccupant(e);
 		
 		x = m->getDest()->x / TILESIZE;
 		y = m->getDest()->y / TILESIZE;
-		tiles[y][x]->addOccupant(e);
+		level->tileAt(x,y)->addOccupant(e);
 	}
 }
 
 bool SceneManager::canMoveTo(int x, int y){
 	if( x < 0 || y < 0 || x >= level->getSizeX()*TILESIZE || y >= level->getSizeY()*TILESIZE )
 		return false;
-	if( level->getTiles()[y / TILESIZE][x / TILESIZE]->isOccupied() )
+	if( level->tileAt(x / TILESIZE, y / TILESIZE)->isOccupied() )
 		return false;
-	if( level->getTiles()[y / TILESIZE][x / TILESIZE]->getType() == tile_type::impassable )
+	if( level->tileAt(x / TILESIZE, y / TILESIZE)->getType() == tile_type::impassable )
 		return false;
 	return true;
 }

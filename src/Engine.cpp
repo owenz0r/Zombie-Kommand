@@ -32,16 +32,17 @@ Engine::Engine(){
 
 	srand( time(NULL) );
 
-	Tile*** tiles = current_scene->getLevel()->getTiles();
+	//Tile*** tiles = current_scene->getLevel()->getTiles();
+	Level *level = current_scene->getLevel();
 	mobs = std::vector<Mob*>();
-	for(int i=0; i < 0; i++){
+	for(int i=0; i < 300; i++){
 		
 		int x = rand() % current_scene->getLevel()->getSizeX();
 		int y = rand() % current_scene->getLevel()->getSizeY();
 		
-		if( !tiles[y][x]->isOccupied() ){
+		if( !level->tileAt(x,y)->isOccupied() ){
 			Mob* mob = new Mob(this, "C:\\dev\\games\\media\\zombie.png", TILESIZE*x, TILESIZE*y);
-			tiles[y][x]->addOccupant(mob);
+			level->tileAt(x,y)->addOccupant(mob);
 			//current_scene->updateOccupancy(mob);
 			mobs.push_back( mob );
 		}
