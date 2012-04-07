@@ -12,9 +12,7 @@ SceneManager::SceneManager(Engine *e, SDL_Surface *s){
 	num_sprites = 0;
 	engine = e;
 	level = new Level( "C:\\dev\\games\\levels\\level1.txt" );
-	screenTilesX = SCREEN_WIDTH / TILESIZE;
-	screenTilesY = SCREEN_HEIGHT / TILESIZE;
-
+	viewport = new Viewport(level);
 }
 
 void SceneManager::drawPlayer(Player *player){
@@ -103,9 +101,10 @@ bool SceneManager::drawScene(){
 	}
 	*/
 
-	for(int i=0; i < this->screenTilesX; i++){
-		for(int j=0; j < this->screenTilesY; j++)
-			applySurface(i*TILESIZE, j*TILESIZE, sprites[level->tileAtRel(i,j)->getType()]->getSprite());
+	float2 *screenTiles = viewport->getScreenTilesXY();
+	for(int i=0; i < screenTiles->x; i++){
+		for(int j=0; j < screenTiles->y; j++)
+			applySurface(i*TILESIZE, j*TILESIZE, sprites[viewport->tileAtRel(i,j)->getType()]->getSprite());
 	}
 
 	return true;
@@ -139,11 +138,15 @@ bool SceneManager::canMoveTo(int x, int y){
 		return false;
 	if( level->tileAt(x / TILESIZE, y / TILESIZE)->isOccupied() )
 		return false;
-	if( level->tileAtRel(x / TILESIZE, y / TILESIZE)->getType() == tile_type::impassable )
+	if( viewport->tileAtRel(x / TILESIZE, y / TILESIZE)->getType() == tile_type::impassable )
 		return false;
 	return true;
 }
 
 Level* SceneManager::getLevel(){
-	return level;
+	return this->level;
+}
+
+Viewport* SceneManager::getViewport(){
+	return this->viewport;
 }

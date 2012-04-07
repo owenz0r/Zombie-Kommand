@@ -5,6 +5,7 @@ Player::Player(Engine *e, std::string filename, int x, int y){
 
 	score = 0;
 	avatar = new Avatar(e, filename, x, y);
+	this->engine = e;
 	e->addEntity(avatar);
 	e->addCharacter(avatar);
 	e->getSceneManager()->getLevel()->tileAt(x/TILESIZE,y/TILESIZE)->addOccupant(avatar);
@@ -19,6 +20,10 @@ void Player::keyPressed(SDL_Event &e){
 			case SDLK_DOWN: avatar->translateY(1*TILESIZE); break;
 			case SDLK_LEFT: avatar->translateX(-1*TILESIZE); break;
 			case SDLK_RIGHT: avatar->translateX(1*TILESIZE); break;
+			case SDLK_w: this->engine->getSceneManager()->getViewport()->moveUp(); break;
+			case SDLK_s: this->engine->getSceneManager()->getViewport()->moveDown(); break;
+			case SDLK_a: this->engine->getSceneManager()->getViewport()->moveLeft(); break;
+			case SDLK_d: this->engine->getSceneManager()->getViewport()->moveRight(); break;
 		}
 	}
 

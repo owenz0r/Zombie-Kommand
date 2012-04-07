@@ -6,16 +6,16 @@
 #include "Drawable.h"
 #include "Level.h"
 #include "Mob.h"
+#include "Viewport.h"
 #include <string>
 
 class SceneManager{
 	Engine *engine;
 	Level *level;
+	Viewport *viewport;
 	SDL_Surface *screen;
 	Drawable *sprites[MAXSPRITES];
 	int num_sprites;
-	int screenTilesX;
-	int screenTilesY;
 public:
 	SceneManager(Engine *e, SDL_Surface *s);
 	bool drawScene();
@@ -28,6 +28,7 @@ public:
 	void updateOccupancy(Moveable* e);
 	bool canMoveTo(int x, int y);
 	Level* getLevel();
+	Viewport* getViewport();
 };
 
 #endif
