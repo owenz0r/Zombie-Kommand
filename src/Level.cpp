@@ -42,6 +42,9 @@ Level::Level(std::string f){
 		for(int k=0; k < sizex; k++)
 			spriteIDs[tiles[j][k]->getType()] = 1;
 	}
+
+	// set the base position
+	this->basePosition = new float2(4,0);
 }
 
 char* Level::getSpriteIDs(){
@@ -63,6 +66,10 @@ int Level::getSizeY(){
 
 Tile* Level::tileAt(int x, int y){
 	return this->tiles[y][x];
+}
+
+Tile* Level::tileAtRel(int x, int y){
+	return this->tileAt( this->basePosition->x + x, this->basePosition->y + y);
 }
 
 void Level::printTileInfo(){

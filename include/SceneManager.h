@@ -14,6 +14,8 @@ class SceneManager{
 	SDL_Surface *screen;
 	Drawable *sprites[MAXSPRITES];
 	int num_sprites;
+	int screenTilesX;
+	int screenTilesY;
 public:
 	SceneManager(Engine *e, SDL_Surface *s);
 	bool drawScene();

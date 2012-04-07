@@ -3,6 +3,7 @@
 #include "Avatar.h"
 #include "Player.h"
 #include "Mob.h"
+#include "globals.h"
 #include <fstream>
 
 SceneManager::SceneManager(Engine *e, SDL_Surface *s){
@@ -11,6 +12,8 @@ SceneManager::SceneManager(Engine *e, SDL_Surface *s){
 	num_sprites = 0;
 	engine = e;
 	level = new Level( "C:\\dev\\games\\levels\\level1.txt" );
+	screenTilesX = SCREEN_WIDTH / TILESIZE;
+	screenTilesY = SCREEN_HEIGHT / TILESIZE;
 
 }
 
@@ -100,9 +103,9 @@ bool SceneManager::drawScene(){
 	}
 	*/
 
-	for(int i=0; i < level->getSizeX(); i++){
-		for(int j=0; j < level->getSizeY(); j++)
-			applySurface(i*TILESIZE, j*TILESIZE, sprites[level->tileAt(i,j)->getType()]->getSprite());
+	for(int i=0; i < this->screenTilesX; i++){
+		for(int j=0; j < this->screenTilesY; j++)
+			applySurface(i*TILESIZE, j*TILESIZE, sprites[level->tileAtRel(i,j)->getType()]->getSprite());
 	}
 
 	return true;
@@ -136,7 +139,7 @@ bool SceneManager::canMoveTo(int x, int y){
 		return false;
 	if( level->tileAt(x / TILESIZE, y / TILESIZE)->isOccupied() )
 		return false;
-	if( level->tileAt(x / TILESIZE, y / TILESIZE)->getType() == tile_type::impassable )
+	if( level->tileAtRel(x / TILESIZE, y / TILESIZE)->getType() == tile_type::impassable )
 		return false;
 	return true;
 }

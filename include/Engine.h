@@ -25,9 +25,7 @@ class Engine{
 	int num_entities;
 	int num_characters;
 
-	static const int SCREEN_WIDTH = 800;
-	static const int SCREEN_HEIGHT = 600;
-	static const int SCREEN_BPP = 32;
+	
 public:
 	Engine();
 	void Run();

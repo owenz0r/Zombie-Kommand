@@ -5,6 +5,7 @@
 #include "Tile.h"
 
 class Level{
+	float2 *basePosition;
 	Tile ***tiles;
 	char spriteIDs[8];
 	int sizex;
@@ -18,6 +19,8 @@ public:
 	int getSizeY();
 	void printTileInfo();
 	Tile* tileAt(int x, int y);
+	Tile* tileAtRel(int x, int y);
+	float2* getBasePosition();
 };
 
 #endif
