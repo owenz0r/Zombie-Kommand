@@ -18,7 +18,7 @@ SceneManager::SceneManager(Engine *e, SDL_Surface *s){
 void SceneManager::drawPlayer(Player *player){
 	
 	Avatar *avatar = player->getAvatar();
-	applySurface(avatar->getPos(), avatar->getSprite());
+	applySurface(avatar->getPos()->x - viewport->getBasePosition()->x*TILESIZE, avatar->getPos()->y - viewport->getBasePosition()->y*TILESIZE, avatar->getSprite());
 
 }
 
