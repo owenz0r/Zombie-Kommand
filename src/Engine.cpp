@@ -95,6 +95,7 @@ void Engine::Run(){
             }
         }
 
+		current_scene->getViewport()->Update(deltaT);
 		// Call Update for each entity
 		for(int i=0; i < num_entities; i++)
 			entities[i]->Update(deltaT);

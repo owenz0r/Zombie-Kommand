@@ -6,7 +6,7 @@
 
 class Avatar : public Entity, public Drawable, public Moveable{
 	int health;
-	float speed;
+	//float speed;
 public:
 	Avatar(Engine *e, std::string filename, int x=0, int y=0);
 	virtual bool translateX(int x);

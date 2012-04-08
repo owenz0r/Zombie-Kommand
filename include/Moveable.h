@@ -8,6 +8,7 @@ protected:
 	float2* dest;
 	float stepx;
 	float stepy;
+	float speed;
 public:
 	
 	virtual ~Moveable(){};
