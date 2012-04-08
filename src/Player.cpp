@@ -20,6 +20,12 @@ void Player::keyPressed(SDL_Event &e){
 			case SDLK_DOWN: avatar->translateY(1*TILESIZE); break;
 			case SDLK_LEFT: avatar->translateX(-1*TILESIZE); break;
 			case SDLK_RIGHT: avatar->translateX(1*TILESIZE); break;
+		}
+	}
+
+	if( engine->getSceneManager()->getViewport()->isMoving() == false ){
+		switch( e.key.keysym.sym )
+		{
 			case SDLK_w: this->engine->getSceneManager()->getViewport()->translateY(-1); break;
 			case SDLK_s: this->engine->getSceneManager()->getViewport()->translateY(1); break;
 			case SDLK_a: this->engine->getSceneManager()->getViewport()->translateX(-1); break;

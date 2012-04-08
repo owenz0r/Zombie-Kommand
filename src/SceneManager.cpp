@@ -24,7 +24,7 @@ void SceneManager::drawPlayer(Player *player){
 
 void SceneManager::drawMob(Mob *mob){
 	
-	applySurface(mob->getPos(), mob->getSprite());
+	applySurface(mob->getPos()->x - viewport->getBasePosition()->x*TILESIZE, mob->getPos()->y - viewport->getBasePosition()->y*TILESIZE, mob->getSprite());
 
 }
 
@@ -102,9 +102,10 @@ bool SceneManager::drawScene(){
 	*/
 
 	float2 *screenTiles = viewport->getScreenTilesXY();
-	for(int i=0; i < screenTiles->x; i++){
-		for(int j=0; j < screenTiles->y; j++)
-			applySurface(i*TILESIZE, j*TILESIZE, sprites[viewport->tileAtRel(i,j)->getType()]->getSprite());
+	float2 *base = viewport->getBasePosition();
+	for(int i=base->x; i < screenTiles->x+base->x; i++){
+		for(int j=base->y; j < screenTiles->y+base->y; j++)
+			applySurface((i - base->x)*TILESIZE, (j - base->y)*TILESIZE, sprites[level->tileAt(i,j)->getType()]->getSprite());
 	}
 
 	return true;
@@ -123,12 +124,12 @@ void SceneManager::updateOccupancy(Moveable* m){
 	if( Entity* e = dynamic_cast<Entity*>(m) ){
 		//Tile*** tiles = level->getTiles();
 		
-		int x = e->getPos()->x / TILESIZE;
-		int y = e->getPos()->y / TILESIZE;
+		int x = (e->getPos()->x / TILESIZE);
+		int y = (e->getPos()->y / TILESIZE);
 		level->tileAt(x,y)->removeOccupant(e);
 		
-		x = m->getDest()->x / TILESIZE;
-		y = m->getDest()->y / TILESIZE;
+		x = (m->getDest()->x / TILESIZE);
+		y = (m->getDest()->y / TILESIZE);
 		level->tileAt(x,y)->addOccupant(e);
 	}
 }
@@ -138,7 +139,7 @@ bool SceneManager::canMoveTo(int x, int y){
 		return false;
 	if( level->tileAt(x / TILESIZE, y / TILESIZE)->isOccupied() )
 		return false;
-	if( viewport->tileAtRel(x / TILESIZE, y / TILESIZE)->getType() == tile_type::impassable )
+	if( level->tileAt(x / TILESIZE, y / TILESIZE)->getType() == tile_type::impassable )
 		return false;
 	return true;
 }
