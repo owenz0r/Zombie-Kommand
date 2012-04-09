@@ -12,7 +12,7 @@ Mob::Mob(Engine *e, std::string filename, int x, int y) : Entity(e,x,y), Drawabl
 	dest = new float2();
 	moving = false;
 	speed = 1.0f;
-	current_state = seek;
+	current_state = wander;
 	e->addEntity(this);
 	awareness = 10;
 	srand( time(NULL) );
@@ -51,9 +51,8 @@ void Mob::animateTo(int x, int y){
 
 }
 
-
-void Mob::seekBehavior(Uint32 time){
-
+Avatar* Mob::getClosestAvatar(){
+	
 	Avatar** characters = engine->getCharacters();
 	int num = engine->getNumCharacters();
 
@@ -70,14 +69,41 @@ void Mob::seekBehavior(Uint32 time){
 			id = i;
 		}
 	}
+	return characters[id];
+}
+
+
+void Mob::seekBehavior(Uint32 time){
+
+	//Avatar** characters = engine->getCharacters();
+	//int num = engine->getNumCharacters();
+
+	/*
+	// find closest avatar
+	int id = -1;
+	float closest = 9999.0f;
+	for(int i=0; i < num; i++){
+		float2 *charPos = characters[i]->getPos();
+		float2 *diff = pos->vectorTo(charPos);
+		float dist = diff->getLength();
+
+		if( dist < closest ){
+			closest = dist;
+			id = i;
+		}
+	}
 
 	float2* tmp = characters[id]->getPos();
+	*/
+	Avatar* closest = this->getClosestAvatar();
+	float2* closestPos = closest->getPos();
+	float closestDist = this->distanceTo(closest); 
 	// vector to nearest avatar
 
 	// only chase if character is within awareness range
 	float2 *toTarget = new float2();
-	if( closest < TILESIZE*this->awareness ){
-		toTarget = pos->vectorTo(tmp->x, tmp->y);
+	if( closestDist < TILESIZE*this->awareness ){
+		toTarget = pos->vectorTo(closestPos->x, closestPos->y);
 		toTarget = toTarget->normalize();
 	}
 
@@ -147,7 +173,16 @@ void Mob::seekBehavior(Uint32 time){
 
 void Mob::wanderBehavior(Uint32 time){
 
-
+	if( !this->isMoving() ){
+		int dir = rand() % 512;
+		switch(dir){
+			case 0 : this->translateX(-1*TILESIZE); break;
+			case 1 : this->translateX(1*TILESIZE); break;
+			case 2 : this->translateY(-1*TILESIZE); break;
+			case 3 : this->translateY(1*TILESIZE); break;
+			default : break;
+		}
+	}
 }
 
 void Mob::Update(Uint32 time){
@@ -172,6 +207,15 @@ void Mob::Update(Uint32 time){
 		}
 	} else {
 		
+		Avatar* closest = this->getClosestAvatar();
+		float closestDist = this->distanceTo(closest);
+
+		if( closestDist < TILESIZE*this->awareness ){
+			this->current_state = seek;
+		} else {
+			this->current_state = wander;
+		}
+
 		switch(current_state){
 			case seek : seekBehavior(time);break;
 			case wander : wanderBehavior(time);break;

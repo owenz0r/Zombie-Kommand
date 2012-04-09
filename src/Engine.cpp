@@ -40,7 +40,7 @@ Engine::Engine(){
 		int x = rand() % current_scene->getLevel()->getSizeX();
 		int y = rand() % current_scene->getLevel()->getSizeY();
 		
-		if( !level->tileAt(x,y)->isOccupied() ){
+		if( !level->tileAt(x,y)->isOccupied() && level->tileAt(x,y)->getType() != tile_type::impassable){
 			Mob* mob = new Mob(this, "C:\\dev\\games\\media\\zombie.png", TILESIZE*x, TILESIZE*y);
 			level->tileAt(x,y)->addOccupant(mob);
 			//current_scene->updateOccupancy(mob);

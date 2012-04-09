@@ -10,3 +10,8 @@ Entity::Entity(Engine *e, int x, int y){
 float2* Entity::getPos(){
 	return pos;
 }
+
+float Entity::distanceTo(Entity *other){
+	float2* vec = this->pos->vectorTo(other->getPos());
+	return vec->getLength();
+}

@@ -24,6 +24,7 @@ public:
 	void seekBehavior(Uint32 time);
 	void wanderBehavior(Uint32 time);
 	float getSpeed();
+	Avatar* getClosestAvatar();
 };
 
 #endif
