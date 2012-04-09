@@ -75,30 +75,7 @@ Avatar* Mob::getClosestAvatar(){
 
 void Mob::seekBehavior(Uint32 time, Avatar *closest, float closestDist){
 
-	//Avatar** characters = engine->getCharacters();
-	//int num = engine->getNumCharacters();
-
-	/*
-	// find closest avatar
-	int id = -1;
-	float closest = 9999.0f;
-	for(int i=0; i < num; i++){
-		float2 *charPos = characters[i]->getPos();
-		float2 *diff = pos->vectorTo(charPos);
-		float dist = diff->getLength();
-
-		if( dist < closest ){
-			closest = dist;
-			id = i;
-		}
-	}
-
-	float2* tmp = characters[id]->getPos();
-	*/
-	//Avatar* closest = this->getClosestAvatar();
 	float2* closestPos = closest->getPos();
-	//float closestDist = this->distanceTo(closest); 
-	// vector to nearest avatar
 
 	// only chase if character is within awareness range
 	float2 *toTarget = new float2();
@@ -111,9 +88,7 @@ void Mob::seekBehavior(Uint32 time, Avatar *closest, float closestDist){
 	// check surrounding area for other mobs
 	/////
 
-	//std::vector<Mob*> otherMobs = engine->getSceneManager()->g;
 	Level* level = engine->getSceneManager()->getLevel();
-	//Tile*** tiles = level->getTiles();
 	float2* surroundingMobs = new float2();
 	
 	for( int i=-1; i < 2; i++ ){
