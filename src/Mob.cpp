@@ -73,7 +73,7 @@ Avatar* Mob::getClosestAvatar(){
 }
 
 
-void Mob::seekBehavior(Uint32 time){
+void Mob::seekBehavior(Uint32 time, Avatar *closest, float closestDist){
 
 	//Avatar** characters = engine->getCharacters();
 	//int num = engine->getNumCharacters();
@@ -95,9 +95,9 @@ void Mob::seekBehavior(Uint32 time){
 
 	float2* tmp = characters[id]->getPos();
 	*/
-	Avatar* closest = this->getClosestAvatar();
+	//Avatar* closest = this->getClosestAvatar();
 	float2* closestPos = closest->getPos();
-	float closestDist = this->distanceTo(closest); 
+	//float closestDist = this->distanceTo(closest); 
 	// vector to nearest avatar
 
 	// only chase if character is within awareness range
@@ -217,7 +217,7 @@ void Mob::Update(Uint32 time){
 		}
 
 		switch(current_state){
-			case seek : seekBehavior(time);break;
+			case seek : seekBehavior(time, closest, closestDist);break;
 			case wander : wanderBehavior(time);break;
 		}
 

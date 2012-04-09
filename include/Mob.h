@@ -21,7 +21,7 @@ public:
 	virtual void moveTo(int x, int y);
 	virtual void animateTo(int x, int y);
 	virtual void Update(Uint32 time);
-	void seekBehavior(Uint32 time);
+	void seekBehavior(Uint32 time, Avatar* closest, float closestDist);
 	void wanderBehavior(Uint32 time);
 	float getSpeed();
 	Avatar* getClosestAvatar();
