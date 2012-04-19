@@ -2,7 +2,6 @@
 #include "Avatar.h"
 #include "globals.h"
 #include "SceneManager.h"
-//#include "Tile.h"
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
@@ -61,7 +60,7 @@ Avatar* Mob::getClosestAvatar(){
 	float closest = 9999.0f;
 	for(int i=0; i < num; i++){
 		v2f &charPos = characters[i]->getPos();
-		v2f diff = charPos - pos; //pos->vectorTo(charPos);
+		v2f diff = charPos - pos;
 		float dist = diff.length();
 
 		if( dist < closest ){
@@ -80,7 +79,7 @@ void Mob::seekBehavior(Uint32 time, Avatar *closest, float closestDist){
 	// only chase if character is within awareness range
 	v2f toTarget = v2f(0,0);
 	if( closestDist < TILESIZE*this->awareness ){
-		toTarget = closestPos - pos;//pos->vectorTo(closestPos->x, closestPos->y);
+		toTarget = closestPos - pos;
 		toTarget = toTarget.normalize();
 	}
 
@@ -101,7 +100,7 @@ void Mob::seekBehavior(Uint32 time, Avatar *closest, float closestDist){
 				continue;
 			std::vector<Entity*> occupants = level->tileAt(x,y)->getOccupants();
 			if( occupants.size() > 0 ){
-				v2f vec = occupants[0]->getPos() - this->pos; //this->pos->vectorTo(occupants[0]->getPos());
+				v2f vec = occupants[0]->getPos() - this->pos;
 				surroundingMobs[0] += vec[0];
 				surroundingMobs[1] += vec[1];
 			}

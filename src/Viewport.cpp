@@ -26,23 +26,10 @@ bool Viewport::translateY(int y){
 		stepy = (dest[1] - this->basePosition[1]) / 1000;
 		stepx = 0.0f;
 		moving = true;
-		//engine->getSceneManager()->updateOccupancy(this);
 	}
 	return moving;
-	/*
-	this->basePosition->y -= 1.0f;
-	if( this->basePosition->y < 0.0f )
-		this->basePosition->y = 0.0f;
-	return true;
-	*/
 }	
-/*
-void Viewport::moveDown(){
-	this->basePosition->y += 1.0f;
-	if( this->basePosition->y > this->maxBaseY )
-		this->basePosition->y = this->maxBaseY;
-}
-*/
+
 bool Viewport::translateX(int x){
 	dest[0] = this->basePosition[0] + x;
 	dest[1] = this->basePosition[1];
@@ -50,23 +37,10 @@ bool Viewport::translateX(int x){
 		stepx = (dest[0] - this->basePosition[0]) / 1000;
 		stepy = 0.0f;
 		moving = true;
-		//engine->getSceneManager()->updateOccupancy(this);
 	}
 	return moving;
-	/*
-	this->basePosition->x -= 1.0f;
-	if( this->basePosition->x < 0.0f )
-		this->basePosition->x = 0.0f;
-	return true;
-	*/
 }
-/*
-void Viewport::moveRight(){
-	this->basePosition->x += 1.0f;
-	if( this->basePosition->x > this->maxBaseX )
-		this->basePosition->x = this->maxBaseX;
-}
-*/
+
 v2f Viewport::getScreenTilesXY(){
 	return v2f(this->screenTilesX, this->screenTilesY);
 }

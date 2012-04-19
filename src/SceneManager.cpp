@@ -94,13 +94,6 @@ bool SceneManager::loadScene(){
 
 bool SceneManager::drawScene(){
 
-	/*
-	for(int i=0; i < level->getSizeY(); i++){
-		for(int j=0; j < level->getSizeX(); j++)
-			applySurface(j*TILESIZE, i*TILESIZE, sprites[level->getTiles()[i][j]->getType()]->getSprite());
-	}
-	*/
-
 	v2f &screenTiles = viewport->getScreenTilesXY();
 	v2f &base = viewport->getBasePosition();
 	for(int i=base[0]; i < screenTiles[0]+base[0]; i++){
@@ -122,7 +115,6 @@ void SceneManager::Update(Uint32 time){
 void SceneManager::updateOccupancy(Moveable* m){
 	
 	if( Entity* e = dynamic_cast<Entity*>(m) ){
-		//Tile*** tiles = level->getTiles();
 		
 		int x = (e->getPos()[0] / TILESIZE);
 		int y = (e->getPos()[1] / TILESIZE);

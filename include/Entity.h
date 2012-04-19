@@ -2,7 +2,6 @@
 #define ENTITY_H
 
 #include "Engine.h"
-//#include "float2.h"
 
 class Entity{
 protected:

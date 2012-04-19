@@ -12,7 +12,6 @@ v2f& Entity::getPos(){
 }
 
 float Entity::distanceTo(Entity *other){
-	//v2f &vec = this->pos->vectorTo(other->getPos());
 	v2f vec = other->pos - this->pos;
 	return vec.length();
 }

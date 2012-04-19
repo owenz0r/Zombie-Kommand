@@ -1,7 +1,6 @@
 #ifndef VIEWPORT_H
 #define VIEWPORT_H
 
-//#include "float2.h"
 #include "Tile.h"
 #include "Level.h"
 #include "Moveable.h"
@@ -17,12 +16,7 @@ class Viewport : public Moveable{
 	bool canMoveTo(int x, int y);
 public:
 	Viewport(Level* level);
-	//virtual void Update(Uint32 time);
 	v2f& getBasePosition();
-	//void moveUp();
-	//void moveDown();
-	//void moveLeft();
-	//void moveRight();
 
 	virtual bool translateX(int x);
 	virtual bool translateY(int y);
