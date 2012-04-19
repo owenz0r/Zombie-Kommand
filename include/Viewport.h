@@ -1,13 +1,13 @@
 #ifndef VIEWPORT_H
 #define VIEWPORT_H
 
-#include "float2.h"
+//#include "float2.h"
 #include "Tile.h"
 #include "Level.h"
 #include "Moveable.h"
 
 class Viewport : public Moveable{
-	float2* basePosition;
+	v2f basePosition;
 	Level* level;
 	int screenTilesX;
 	int screenTilesY;
@@ -18,7 +18,7 @@ class Viewport : public Moveable{
 public:
 	Viewport(Level* level);
 	//virtual void Update(Uint32 time);
-	float2* getBasePosition();
+	v2f& getBasePosition();
 	//void moveUp();
 	//void moveDown();
 	//void moveLeft();
@@ -32,7 +32,7 @@ public:
 
 	int getScreenTilesX();
 	int getScreenTilesY();
-	float2 *getScreenTilesXY();
+	v2f getScreenTilesXY();
 	Tile* Viewport::tileAtRel(int x, int y);
 
 	bool isMoving();

@@ -3,15 +3,16 @@
 Entity::Entity(Engine *e, int x, int y){
 
 	engine = e;
-	pos = new float2(x,y);
+	pos = v2f(x,y);
 
 }
 
-float2* Entity::getPos(){
+v2f& Entity::getPos(){
 	return pos;
 }
 
 float Entity::distanceTo(Entity *other){
-	float2* vec = this->pos->vectorTo(other->getPos());
-	return vec->getLength();
+	//v2f &vec = this->pos->vectorTo(other->getPos());
+	v2f vec = other->pos - this->pos;
+	return vec.length();
 }

@@ -2,16 +2,16 @@
 #include "SceneManager.h"
 
 Avatar::Avatar(Engine *e, std::string filename, int x, int y) : Entity(e,x,y), Drawable(filename){
-	dest = new float2();
+	dest = v2f(0,0);
 	moving = false;
 	speed = 3.0f;
 }
 
 bool Avatar::translateX(int x){
-	dest->x = pos->x + x;
-	dest->y = pos->y;
-	if( engine->getSceneManager()->canMoveTo(dest->x, dest->y) ){
-		stepx = (dest->x - pos->x) / 1000;
+	dest[0] = pos[0] + x;
+	dest[1] = pos[1];
+	if( engine->getSceneManager()->canMoveTo(dest[0], dest[1]) ){
+		stepx = (dest[0] - pos[0]) / 1000;
 		stepy = 0.0f;
 		moving = true;
 		engine->getSceneManager()->updateOccupancy(this);
@@ -20,11 +20,11 @@ bool Avatar::translateX(int x){
 }
 
 bool Avatar::translateY(int y){
-	dest->x = pos->x;
-	dest->y = pos->y + y;
-	if( engine->getSceneManager()->canMoveTo(dest->x, dest->y) ){
+	dest[0] = pos[0];
+	dest[1] = pos[1] + y;
+	if( engine->getSceneManager()->canMoveTo(dest[0], dest[1]) ){
 		stepx = 0.0f;
-		stepy = (dest->y - pos->y) / 1000;
+		stepy = (dest[1] - pos[1]) / 1000;
 		moving = true;
 		engine->getSceneManager()->updateOccupancy(this);
 	}
@@ -32,8 +32,8 @@ bool Avatar::translateY(int y){
 }
 
 void Avatar::moveTo(int x, int y){
-	pos->x = x;
-	pos->y = y;
+	pos[0] = x;
+	pos[1] = y;
 }
 
 void Avatar::animateTo(int x, int y){
@@ -42,19 +42,19 @@ void Avatar::animateTo(int x, int y){
 
 void Avatar::Update(Uint32 time){
 	if( moving ){
-		pos->x += time * stepx * speed;
-		pos->y += time * stepy * speed;
+		pos[0] += time * stepx * speed;
+		pos[1] += time * stepy * speed;
 
 		// if we're moving in positive direction
 		if( stepx > 0.0f || stepy > 0.0f ){
 			// if we've reached the destination
-			if( pos->x >= dest->x && pos->y >= dest->y ){
-				moveTo(dest->x,dest->y);
+			if( pos[0] >= dest[0] && pos[1] >= dest[1] ){
+				moveTo(dest[0],dest[1]);
 				moving = false;
 			}
 		} else {
-			if( pos->x <= dest->x && pos->y <= dest->y ){
-				moveTo(dest->x,dest->y);
+			if( pos[0] <= dest[0] && pos[1] <= dest[1] ){
+				moveTo(dest[0],dest[1]);
 				moving = false;
 			}
 		}

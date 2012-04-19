@@ -1,8 +1,8 @@
 #include "Tile.h"
 
 Tile::Tile(float x, float y, tile_type type){
-	this->pos.x = x;
-	this->pos.y = y;
+	this->pos[0] = x;
+	this->pos[1] = y;
 	this->type = type;
 	this->occupants = std::vector<Entity*>();
 }

@@ -21,7 +21,7 @@ public:
 	bool drawScene();
 	bool loadScene();
 	void applySurface(int x, int y, SDL_Surface* source);
-	void applySurface(float2 *pos, SDL_Surface* source);
+	void applySurface(v2f &pos, SDL_Surface* source);
 	void drawPlayer(Player *player);
 	void drawMob(Mob* mob);
 	void Update(Uint32 time);

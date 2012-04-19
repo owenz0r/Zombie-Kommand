@@ -2,7 +2,7 @@
 #include "globals.h"
 
 Viewport::Viewport(Level* level){
-	this->basePosition = new float2();
+	this->basePosition = v2f(0,0);
 	this->level = level;
 	this->screenTilesX = SCREEN_WIDTH / TILESIZE;
 	this->screenTilesY = SCREEN_HEIGHT / TILESIZE;
@@ -10,20 +10,20 @@ Viewport::Viewport(Level* level){
 	this->maxBaseY = this->level->getSizeY() - this->screenTilesY;
 
 	this->moving = false;
-	this->dest = new float2();
+	this->dest = v2f(0,0);
 	this->moving = false;
 	this->speed = 3.0f;
 }
 
-float2* Viewport::getBasePosition(){
+v2f& Viewport::getBasePosition(){
 	return this->basePosition;
 }
 
 bool Viewport::translateY(int y){
-	dest->x = this->basePosition->x;
-	dest->y = this->basePosition->y + y;
-	if( this->canMoveTo(dest->x, dest->y) ){
-		stepy = (dest->y - this->basePosition->y) / 1000;
+	dest[0] = this->basePosition[0];
+	dest[1] = this->basePosition[1] + y;
+	if( this->canMoveTo(dest[0], dest[1]) ){
+		stepy = (dest[1] - this->basePosition[1]) / 1000;
 		stepx = 0.0f;
 		moving = true;
 		//engine->getSceneManager()->updateOccupancy(this);
@@ -44,10 +44,10 @@ void Viewport::moveDown(){
 }
 */
 bool Viewport::translateX(int x){
-	dest->x = this->basePosition->x + x;
-	dest->y = this->basePosition->y;
-	if( this->canMoveTo(dest->x, dest->y) ){
-		stepx = (dest->x - this->basePosition->x) / 1000;
+	dest[0] = this->basePosition[0] + x;
+	dest[1] = this->basePosition[1];
+	if( this->canMoveTo(dest[0], dest[1]) ){
+		stepx = (dest[0] - this->basePosition[0]) / 1000;
 		stepy = 0.0f;
 		moving = true;
 		//engine->getSceneManager()->updateOccupancy(this);
@@ -67,29 +67,29 @@ void Viewport::moveRight(){
 		this->basePosition->x = this->maxBaseX;
 }
 */
-float2* Viewport::getScreenTilesXY(){
-	return new float2(this->screenTilesX, this->screenTilesY);
+v2f Viewport::getScreenTilesXY(){
+	return v2f(this->screenTilesX, this->screenTilesY);
 }
 
 Tile* Viewport::tileAtRel(int x, int y){
-	return this->level->tileAt( this->basePosition->x + x, this->basePosition->y + y);
+	return this->level->tileAt( this->basePosition[0] + x, this->basePosition[1] + y);
 }
 
 void Viewport::Update(Uint32 time){
 	if( moving ){
-		this->basePosition->x += time * stepx * speed;
-		this->basePosition->y += time * stepy * speed;
+		this->basePosition[0] += time * stepx * speed;
+		this->basePosition[1] += time * stepy * speed;
 
 		// if we're moving in positive direction
 		if( stepx > 0.0f || stepy > 0.0f ){
 			// if we've reached the destination
-			if( this->basePosition->x >= dest->x && this->basePosition->y >= dest->y ){
-				this->moveTo(dest->x,dest->y);
+			if( this->basePosition[0] >= dest[0] && this->basePosition[1] >= dest[1] ){
+				this->moveTo(dest[0],dest[1]);
 				moving = false;
 			}
 		} else {
-			if( this->basePosition->x <= dest->x && this->basePosition->y <= dest->y ){
-				this->moveTo(dest->x,dest->y);
+			if( this->basePosition[0] <= dest[0] && this->basePosition[1] <= dest[1] ){
+				this->moveTo(dest[0],dest[1]);
 				moving = false;
 			}
 		}
@@ -105,8 +105,8 @@ bool Viewport::canMoveTo(int x, int y){
 }
 
 void Viewport::moveTo(int x, int y){
-	this->basePosition->x = x;
-	this->basePosition->y = y;
+	this->basePosition[0] = x;
+	this->basePosition[1] = y;
 }
 
 

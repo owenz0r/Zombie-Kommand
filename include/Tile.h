@@ -11,7 +11,7 @@ enum tile_type{
 
 class Tile{
 	tile_type type;
-	float2 pos;
+	v2f pos;
 	std::vector<Entity*> occupants;
 
 public:

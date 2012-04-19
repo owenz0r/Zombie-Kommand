@@ -18,24 +18,24 @@ SceneManager::SceneManager(Engine *e, SDL_Surface *s){
 void SceneManager::drawPlayer(Player *player){
 	
 	Avatar *avatar = player->getAvatar();
-	applySurface(avatar->getPos()->x - viewport->getBasePosition()->x*TILESIZE, avatar->getPos()->y - viewport->getBasePosition()->y*TILESIZE, avatar->getSprite());
+	applySurface(avatar->getPos()[0] - viewport->getBasePosition()[0]*TILESIZE, avatar->getPos()[1] - viewport->getBasePosition()[1]*TILESIZE, avatar->getSprite());
 
 }
 
 void SceneManager::drawMob(Mob *mob){
 	
-	applySurface(mob->getPos()->x - viewport->getBasePosition()->x*TILESIZE, mob->getPos()->y - viewport->getBasePosition()->y*TILESIZE, mob->getSprite());
+	applySurface(mob->getPos()[0] - viewport->getBasePosition()[0]*TILESIZE, mob->getPos()[1] - viewport->getBasePosition()[1]*TILESIZE, mob->getSprite());
 
 }
 
-void SceneManager::applySurface(float2 *pos, SDL_Surface *source)
+void SceneManager::applySurface(v2f &pos, SDL_Surface *source)
 {
     //Temporary rectangle to hold the offsets
     SDL_Rect offset;
     
     //Get the offsets
-    offset.x = pos->x;
-    offset.y = pos->y;
+    offset.x = pos[0];
+    offset.y = pos[1];
     
     //Blit the surface
     SDL_BlitSurface( source, NULL, screen, &offset );
@@ -101,11 +101,11 @@ bool SceneManager::drawScene(){
 	}
 	*/
 
-	float2 *screenTiles = viewport->getScreenTilesXY();
-	float2 *base = viewport->getBasePosition();
-	for(int i=base->x; i < screenTiles->x+base->x; i++){
-		for(int j=base->y; j < screenTiles->y+base->y; j++)
-			applySurface((i - base->x)*TILESIZE, (j - base->y)*TILESIZE, sprites[level->tileAt(i,j)->getType()]->getSprite());
+	v2f &screenTiles = viewport->getScreenTilesXY();
+	v2f &base = viewport->getBasePosition();
+	for(int i=base[0]; i < screenTiles[0]+base[0]; i++){
+		for(int j=base[1]; j < screenTiles[1]+base[1]; j++)
+			applySurface((i - base[0])*TILESIZE, (j - base[1])*TILESIZE, sprites[level->tileAt(i,j)->getType()]->getSprite());
 	}
 
 	return true;
@@ -124,12 +124,12 @@ void SceneManager::updateOccupancy(Moveable* m){
 	if( Entity* e = dynamic_cast<Entity*>(m) ){
 		//Tile*** tiles = level->getTiles();
 		
-		int x = (e->getPos()->x / TILESIZE);
-		int y = (e->getPos()->y / TILESIZE);
+		int x = (e->getPos()[0] / TILESIZE);
+		int y = (e->getPos()[1] / TILESIZE);
 		level->tileAt(x,y)->removeOccupant(e);
 		
-		x = (m->getDest()->x / TILESIZE);
-		y = (m->getDest()->y / TILESIZE);
+		x = (m->getDest()[0] / TILESIZE);
+		y = (m->getDest()[1] / TILESIZE);
 		level->tileAt(x,y)->addOccupant(e);
 	}
 }
