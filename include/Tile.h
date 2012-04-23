@@ -17,6 +17,7 @@ class Tile{
 public:
 	Tile(float x, float y, tile_type type);
 	int getType();
+	void setType(int t);
 	std::vector<Entity*> getOccupants();
 	int addOccupant(Entity* e);
 	int removeOccupant(Entity* e);

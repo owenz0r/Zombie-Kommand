@@ -25,6 +25,7 @@ public:
 	void wanderBehavior(Uint32 time);
 	float getSpeed();
 	Avatar* getClosestAvatar();
+	bool canSee(Entity* other);
 };
 
 #endif

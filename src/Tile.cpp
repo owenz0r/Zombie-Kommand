@@ -40,3 +40,7 @@ bool Tile::isOccupied(){
 std::vector<Entity*> Tile::getOccupants(){
 	return occupants;
 }
+
+void Tile::setType(int t){
+	this->type = (tile_type)t;
+}

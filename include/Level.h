@@ -17,6 +17,7 @@ public:
 	int getSizeY();
 	void printTileInfo();
 	Tile* tileAt(int x, int y);
+	std::vector<Tile*> &getTilesOnLine(int x1, int y1, int x2, int y2);
 
 };
 

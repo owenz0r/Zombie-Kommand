@@ -181,10 +181,12 @@ void Mob::Update(Uint32 time){
 		}
 	} else {
 		
+		// if we're not moving 
 		Avatar* closest = this->getClosestAvatar();
 		float closestDist = this->distanceTo(closest);
 
-		if( closestDist < TILESIZE*this->awareness ){
+		// check awareness range and vision
+		if( closestDist < TILESIZE*this->awareness && this->canSee(closest) ){
 			this->current_state = seek;
 		} else {
 			this->current_state = wander;
@@ -197,6 +199,22 @@ void Mob::Update(Uint32 time){
 
 	}
 
+}
+
+// very simple check for visibility
+bool Mob::canSee(Entity *other){
+	Level* level = this->engine->getSceneManager()->getLevel();
+
+	// get the tiles from current tile to other
+	std::vector<Tile*> tiles = level->getTilesOnLine((int)this->pos[0] / TILESIZE, (int)this->pos[1] / TILESIZE, 
+											(int)other->getPos()[0] / TILESIZE, (int)other->getPos()[1] / TILESIZE);
+
+	// currently only things that block vision are impassables
+	for(int i=0; i < tiles.size(); i++){
+		if( tiles[i]->getType() == tile_type::impassable )
+			return false;
+	}
+	return true;
 }
 
 float Mob::getSpeed(){

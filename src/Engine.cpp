@@ -43,7 +43,6 @@ Engine::Engine(){
 		if( !level->tileAt(x,y)->isOccupied() && level->tileAt(x,y)->getType() != tile_type::impassable){
 			Mob* mob = new Mob(this, "C:\\dev\\games\\media\\zombie.png", TILESIZE*x, TILESIZE*y);
 			level->tileAt(x,y)->addOccupant(mob);
-			//current_scene->updateOccupancy(mob);
 			mobs.push_back( mob );
 		}
 	}

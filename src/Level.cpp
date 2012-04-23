@@ -69,3 +69,34 @@ void Level::printTileInfo(){
 		}
 	}
 }
+
+// Simplified Bresenham algorithm
+// http://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
+std::vector<Tile*>& Level::getTilesOnLine(int x0, int y0, int x1, int y1){
+	std::vector<Tile*> *result = new std::vector<Tile*>();
+
+	int dx = abs(x1 - x0);
+	int dy = abs(y1 - y0);
+
+	int sx, sy;
+	sx = x0 < x1 ? 1 : -1;
+	sy = y0 < y1 ? 1 : -1;
+	int err = dx - dy;
+
+	result->push_back(tileAt(x0,y0));
+	while( x0 != x1 || y0 != y1 ){
+		int e2 = err * 2;
+		
+		if( e2 > -dy ){
+			err -= dy;
+			x0 += sx;
+		}
+
+		if( e2 < dx ){
+			err += dx;
+			y0 += sy;
+		}
+		result->push_back(tileAt(x0,y0));
+	}
+	return *result;
+}
