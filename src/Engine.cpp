@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "Player.h"
 #include "Mob.h"
+#include "Utility.h"
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,6 +47,7 @@ Engine::Engine(){
 			mobs.push_back( mob );
 		}
 	}
+
 }
 
 void Engine::Shutdown(){
