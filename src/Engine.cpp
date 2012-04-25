@@ -47,7 +47,8 @@ Engine::Engine(){
 			mobs.push_back( mob );
 		}
 	}
-
+	
+	
 }
 
 void Engine::Shutdown(){
@@ -107,6 +108,9 @@ void Engine::Run(){
 		for(int i=0; i < mobs.size(); i++)
 			current_scene->drawMob(mobs[i]);
 
+		//setPixel(screen, 5, 5, 0, 255, 0);
+		//drawLine(screen, 0,0,200,200);
+
 		SDL_Flip( screen );
 		//current_scene->getLevel()->printTileInfo();
 
@@ -136,4 +140,8 @@ SceneManager* Engine::getSceneManager(){
 
 std::vector<Mob*> Engine::getMobs(){
 	return mobs;
+}
+
+SDL_Surface* Engine::getScreen(){
+	return screen;
 }

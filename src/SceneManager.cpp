@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Mob.h"
 #include "globals.h"
+#include "Utility.h"
 #include <fstream>
 
 SceneManager::SceneManager(Engine *e, SDL_Surface *s){

@@ -39,6 +39,7 @@ public:
 	int getNumCharacters();
 	SceneManager* getSceneManager();
 	std::vector<Mob*> getMobs();
+	SDL_Surface* getScreen();
 };
 
 #endif
