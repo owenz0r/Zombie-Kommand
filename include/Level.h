@@ -18,6 +18,7 @@ public:
 	void printTileInfo();
 	Tile* tileAt(int x, int y);
 	std::vector<Tile*> &getTilesOnLine(int x1, int y1, int x2, int y2);
+	std::vector<v2f*> &processEdges(SDL_Surface* screen);
 
 };
 

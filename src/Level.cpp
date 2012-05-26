@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include "Level.h"
+#include "Utility.h"
 
 using namespace std;
 
@@ -99,4 +100,66 @@ std::vector<Tile*>& Level::getTilesOnLine(int x0, int y0, int x1, int y1){
 		result->push_back(tileAt(x0,y0));
 	}
 	return *result;
+}
+
+std::vector<v2f*>& Level::processEdges(SDL_Surface *screen){
+
+	if( tiles != NULL){
+
+		// set up edge array and initialize
+		bool **edgeMap = new bool*[sizex+1];
+		for(int i=0; i < sizex+1; i++){
+			edgeMap[i] = new bool[sizey+1];
+			for(int j=0; j < sizey+1; j++)
+				edgeMap[i][j] = false;
+		}
+
+		// loop through tiles Y
+		for(int x=0; x < sizex; x++){
+			for(int y=0; y < sizey; y++){
+				// if the current tile is a wall
+				if( tileAt(x,y)->getType() == tile_type::impassable ){
+					// if previous isnt a wall
+					if( y <= 0 || tileAt(x,y-1)->getType() != tile_type::impassable ){
+						edgeMap[x][y] = true;
+					}
+					// if next isnt a wall
+					if( y >= sizey-1 || tileAt(x,y+1)->getType() != tile_type::impassable ){
+						edgeMap[x][y+1] = true;
+					}
+				}
+			}
+		}
+
+		// loop through tiles X
+		for(int y=0; y < sizey; y++){
+			for(int x=0; x < sizex; x++){
+				// if the current tile is a wall
+				if( tileAt(x,y)->getType() == tile_type::impassable ){
+					// if previous isnt a wall
+					if( x <= 0 || tileAt(x-1,y)->getType() != tile_type::impassable ){
+						edgeMap[x][y] = true;
+					}
+					// if next isnt a wall
+					if( x >= sizex-1 || tileAt(x+1,y)->getType() != tile_type::impassable ){
+						edgeMap[x][y+1] = true;
+					}
+				}
+			}
+		}
+
+		for(int x=0; x < sizex+1; x++){
+			for(int y=0; y < sizey+1; y++){
+				if( edgeMap[x][y] ){
+					setPixel(screen, x, y, 0,255,0);
+				}
+			}
+		}
+		
+
+	} else {
+		std::cout << "TILES ARRAY WAS NULL" << std::endl;
+		exit(1);
+	}
+
 }

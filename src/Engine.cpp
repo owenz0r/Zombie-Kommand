@@ -48,7 +48,7 @@ Engine::Engine(){
 		}
 	}
 	
-	
+	level->processEdges(screen);
 }
 
 void Engine::Shutdown(){
@@ -111,6 +111,7 @@ void Engine::Run(){
 		//setPixel(screen, 5, 5, 0, 255, 0);
 		//drawLine(screen, 0,0,200,200);
 
+		current_scene->getLevel()->processEdges(screen);
 		SDL_Flip( screen );
 		//current_scene->getLevel()->printTileInfo();
 
