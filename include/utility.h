@@ -2,7 +2,7 @@
 // http://www.friedspace.com/cprogramming/SDLTest.c
 static void setPixel(SDL_Surface *screen, int x, int y, Uint8 r, Uint8 g, Uint8 b)
 {
-	if( x < 0 || y < 0 )
+	if( x < 0 || y < 0 || x >= SCREEN_WIDTH || y >= SCREEN_HEIGHT)
 		return;
 
 	Uint32 *pixmem32;

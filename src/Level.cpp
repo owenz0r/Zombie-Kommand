@@ -102,16 +102,27 @@ std::vector<Tile*>& Level::getTilesOnLine(int x0, int y0, int x1, int y1){
 	return *result;
 }
 
-std::vector<v2f*>& Level::processEdges(SDL_Surface *screen){
+void Level::processEdges(SDL_Surface *screen, v2f &basePos){
 
 	if( tiles != NULL){
 
-		// set up edge array and initialize
-		bool **edgeMap = new bool*[sizex+1];
+		// map of corner points on level
+		bool **cornerMap = new bool*[sizex+1];
 		for(int i=0; i < sizex+1; i++){
-			edgeMap[i] = new bool[sizey+1];
+			cornerMap[i] = new bool[sizey+1];
 			for(int j=0; j < sizey+1; j++)
-				edgeMap[i][j] = false;
+				cornerMap[i][j] = false;
+		}
+
+		/////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////
+
+		// set up edge array and initialize
+		bool **edgeMapY = new bool*[sizex];
+		for(int i=0; i < sizex; i++){
+			edgeMapY[i] = new bool[sizey+1];
+			for(int j=0; j < sizey+1; j++)
+				edgeMapY[i][j] = false;
 		}
 
 		// loop through tiles Y
@@ -121,16 +132,28 @@ std::vector<v2f*>& Level::processEdges(SDL_Surface *screen){
 				if( tileAt(x,y)->getType() == tile_type::impassable ){
 					// if previous isnt a wall
 					if( y <= 0 || tileAt(x,y-1)->getType() != tile_type::impassable ){
-						edgeMap[x][y] = true;
+						edgeMapY[x][y] = true;
 					}
 					// if next isnt a wall
 					if( y >= sizey-1 || tileAt(x,y+1)->getType() != tile_type::impassable ){
-						edgeMap[x][y+1] = true;
+						edgeMapY[x][y+1] = true;
 					}
 				}
 			}
 		}
 
+		/////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////
+
+		// set up edge array and initialize
+		bool **edgeMapX = new bool*[sizey];
+		for(int i=0; i < sizey; i++){
+			edgeMapX[i] = new bool[sizex+1];
+			for(int j=0; j < sizex+1; j++)
+				edgeMapX[i][j] = false;
+		}
+
+		
 		// loop through tiles X
 		for(int y=0; y < sizey; y++){
 			for(int x=0; x < sizex; x++){
@@ -138,23 +161,69 @@ std::vector<v2f*>& Level::processEdges(SDL_Surface *screen){
 				if( tileAt(x,y)->getType() == tile_type::impassable ){
 					// if previous isnt a wall
 					if( x <= 0 || tileAt(x-1,y)->getType() != tile_type::impassable ){
-						edgeMap[x][y] = true;
+						edgeMapX[y][x] = true;
 					}
 					// if next isnt a wall
 					if( x >= sizex-1 || tileAt(x+1,y)->getType() != tile_type::impassable ){
-						edgeMap[x][y+1] = true;
+						edgeMapX[y][x+1] = true;
+					}
+				}
+			}
+		}
+		
+		/////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////
+
+		
+		for(int x=0; x < sizex; x++){
+			for(int y=0; y < sizey; y++){
+				if( edgeMapX[y][x] == true ){
+					if( edgeMapY[x][y] == true ) {
+						cornerMap[x][y] = true;
+					}
+					if( edgeMapY[x][y+1] == true ){
+						cornerMap[x][y+1] = true;
+					}
+				}
+
+				if( x < sizex && edgeMapX[y][x+1] == true ){
+					if( edgeMapY[x][y] == true ) {
+						cornerMap[x+1][y] = true;
+					}
+					if( edgeMapY[x][y+1] == true ){
+						cornerMap[x+1][y+1] = true;
 					}
 				}
 			}
 		}
 
+
+		std::vector<v2f*> *lines = new std::vector<v2f*>();
+		// verticle lines
 		for(int x=0; x < sizex+1; x++){
 			for(int y=0; y < sizey+1; y++){
-				if( edgeMap[x][y] ){
-					setPixel(screen, x, y, 0,255,0);
+				if( cornerMap[x][y] ){
+					lines->push_back(new v2f(x,y));
 				}
 			}
 		}
+		
+		// horizontal lines
+		for(int y=0; y < sizey+1; y++){
+			for(int x=0; x < sizex+1; x++){
+				if( cornerMap[x][y] ){
+					lines->push_back(new v2f(x,y));
+				}
+			}
+		}
+
+		// draw lines
+		for(int i=0; i < lines->size(); i+=2){
+			v2f* p1 = lines->at(i);
+			v2f* p2 = lines->at(i+1);
+			drawLine(screen, ((*p1)[0]-basePos[0])*TILESIZE, ((*p1)[1]-basePos[1])*TILESIZE, ((*p2)[0]-basePos[0])*TILESIZE, ((*p2)[1]-basePos[1])*TILESIZE);
+		}
+			
 		
 
 	} else {
