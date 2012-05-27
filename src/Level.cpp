@@ -43,6 +43,8 @@ Level::Level(std::string f){
 		for(int k=0; k < sizex; k++)
 			spriteIDs[tiles[j][k]->getType()] = 1;
 	}
+
+	edgeList = processEdges();
 }
 
 char* Level::getSpriteIDs(){
@@ -102,7 +104,7 @@ std::vector<Tile*>& Level::getTilesOnLine(int x0, int y0, int x1, int y1){
 	return *result;
 }
 
-void Level::processEdges(SDL_Surface *screen, v2f &basePos){
+std::vector<v2f*>* Level::processEdges(SDL_Surface *screen, v2f *basePos){
 
 	if( tiles != NULL){
 
@@ -217,13 +219,16 @@ void Level::processEdges(SDL_Surface *screen, v2f &basePos){
 			}
 		}
 
-		// draw lines
-		for(int i=0; i < lines->size(); i+=2){
-			v2f* p1 = lines->at(i);
-			v2f* p2 = lines->at(i+1);
-			drawLine(screen, ((*p1)[0]-basePos[0])*TILESIZE, ((*p1)[1]-basePos[1])*TILESIZE, ((*p2)[0]-basePos[0])*TILESIZE, ((*p2)[1]-basePos[1])*TILESIZE);
+		if( screen && basePos ){
+			// draw lines
+			for(int i=0; i < lines->size(); i+=2){
+				v2f* p1 = lines->at(i);
+				v2f* p2 = lines->at(i+1);
+				drawLine(screen, ((*p1)[0]-(*basePos)[0])*TILESIZE, ((*p1)[1]-(*basePos)[1])*TILESIZE, ((*p2)[0]-(*basePos)[0])*TILESIZE, ((*p2)[1]-(*basePos)[1])*TILESIZE);
+			}
 		}
-			
+		
+		return lines;
 		
 
 	} else {
@@ -231,4 +236,8 @@ void Level::processEdges(SDL_Surface *screen, v2f &basePos){
 		exit(1);
 	}
 
+}
+
+std::vector<v2f*>* Level::getEdgeList(){
+	return this->edgeList;
 }

@@ -186,7 +186,7 @@ void Mob::Update(Uint32 time){
 		float closestDist = this->distanceTo(closest);
 
 		// check awareness range and vision
-		if( closestDist < TILESIZE*this->awareness && this->canSee(closest) ){
+		if( closestDist < (TILESIZE*this->awareness) && this->canSee(closest) ){
 			this->current_state = seek;
 		} else {
 			this->current_state = wander;

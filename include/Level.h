@@ -10,6 +10,8 @@ class Level{
 	int sizex;
 	int sizey;
 	std::string filename;
+	std::vector<v2f*> *edgeList;
+	std::vector<v2f*>* processEdges(SDL_Surface* screen=NULL, v2f *basePos=NULL);
 public:
 	Level(std::string f);
 	char* getSpriteIDs();
@@ -18,7 +20,7 @@ public:
 	void printTileInfo();
 	Tile* tileAt(int x, int y);
 	std::vector<Tile*> &getTilesOnLine(int x1, int y1, int x2, int y2);
-	void processEdges(SDL_Surface* screen, v2f &basePos);
+	std::vector<v2f*>* getEdgeList();
 
 };
 
