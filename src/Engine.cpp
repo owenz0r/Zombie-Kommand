@@ -36,7 +36,7 @@ Engine::Engine(){
 	//Tile*** tiles = current_scene->getLevel()->getTiles();
 	Level *level = current_scene->getLevel();
 	mobs = std::vector<Mob*>();
-	for(int i=0; i < 300; i++){
+	for(int i=0; i < 3000; i++){
 		
 		int x = rand() % current_scene->getLevel()->getSizeX();
 		int y = rand() % current_scene->getLevel()->getSizeY();
@@ -110,6 +110,7 @@ void Engine::Run(){
 		//setPixel(screen, 5, 5, 0, 255, 0);
 		//drawLine(screen, 0,0,200,200);
 
+		//current_scene->getLevel()->processEdges(this->screen, &current_scene->getViewport()->getBasePosition());
 		SDL_Flip( screen );
 		//current_scene->getLevel()->printTileInfo();
 

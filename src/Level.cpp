@@ -205,7 +205,7 @@ std::vector<v2f*>* Level::processEdges(SDL_Surface *screen, v2f *basePos){
 		for(int x=0; x < sizex+1; x++){
 			for(int y=0; y < sizey+1; y++){
 				if( cornerMap[x][y] ){
-					lines->push_back(new v2f(x,y));
+					lines->push_back(new v2f(x*TILESIZE,y*TILESIZE));
 				}
 			}
 		}
@@ -214,7 +214,7 @@ std::vector<v2f*>* Level::processEdges(SDL_Surface *screen, v2f *basePos){
 		for(int y=0; y < sizey+1; y++){
 			for(int x=0; x < sizex+1; x++){
 				if( cornerMap[x][y] ){
-					lines->push_back(new v2f(x,y));
+					lines->push_back(new v2f(x*TILESIZE,y*TILESIZE));
 				}
 			}
 		}
@@ -224,7 +224,7 @@ std::vector<v2f*>* Level::processEdges(SDL_Surface *screen, v2f *basePos){
 			for(int i=0; i < lines->size(); i+=2){
 				v2f* p1 = lines->at(i);
 				v2f* p2 = lines->at(i+1);
-				drawLine(screen, ((*p1)[0]-(*basePos)[0])*TILESIZE, ((*p1)[1]-(*basePos)[1])*TILESIZE, ((*p2)[0]-(*basePos)[0])*TILESIZE, ((*p2)[1]-(*basePos)[1])*TILESIZE);
+				drawLine(screen, ((*p1)[0]-(*basePos)[0]), ((*p1)[1]-(*basePos)[1]), ((*p2)[0]-(*basePos)[0]), ((*p2)[1]-(*basePos)[1]));
 			}
 		}
 		

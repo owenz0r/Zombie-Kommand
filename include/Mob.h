@@ -4,7 +4,7 @@
 #include "Drawable.h"
 #include "Moveable.h"
 
-enum State{
+enum mob_state{
 	seek,
 	wander
 };
@@ -12,7 +12,7 @@ enum State{
 class Mob : public Entity, public Drawable, public Moveable {
 	int health;
 	float speed;
-	State current_state;
+	mob_state current_state;
 	int awareness;
 public:
 	Mob(Engine *e, std::string filename, int x=0, int y=0);
@@ -26,6 +26,7 @@ public:
 	float getSpeed();
 	Avatar* getClosestAvatar();
 	bool canSee(Entity* other);
+	mob_state getCurrentState();
 };
 
 #endif

@@ -2,6 +2,7 @@
 #include "Avatar.h"
 #include "globals.h"
 #include "SceneManager.h"
+#include "Utility.h"
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
@@ -205,6 +206,19 @@ void Mob::Update(Uint32 time){
 bool Mob::canSee(Entity *other){
 	Level* level = this->engine->getSceneManager()->getLevel();
 
+	
+	std::vector<v2f*>* edgeList = level->getEdgeList();
+
+	for(int i=0; i < edgeList->size(); i+=2){
+		v2f p1(this->pos[0]+(TILESIZE/2), this->pos[1]+(TILESIZE/2));
+		v2f p2(other->getPos()[0]+(TILESIZE/2), other->getPos()[1]+(TILESIZE/2));
+		if( intersectionTest(p1, p2, *edgeList->at(i), *edgeList->at(i+1)) )
+			return false;
+	}
+	//drawLine(this->engine->getScreen(),this->pos[0],this->pos[1],other->getPos()[0],other->getPos()[1]);
+	return true;
+	
+	/*
 	// get the tiles from current tile to other
 	std::vector<Tile*> tiles = level->getTilesOnLine((int)this->pos[0] / TILESIZE, (int)this->pos[1] / TILESIZE, 
 											(int)other->getPos()[0] / TILESIZE, (int)other->getPos()[1] / TILESIZE);
@@ -215,8 +229,13 @@ bool Mob::canSee(Entity *other){
 			return false;
 	}
 	return true;
+	*/
 }
 
 float Mob::getSpeed(){
 	return speed;
+}
+
+mob_state Mob::getCurrentState(){
+	return current_state;
 }
