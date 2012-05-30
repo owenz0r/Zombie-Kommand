@@ -8,7 +8,7 @@
 #include <time.h>
 
 
-Mob::Mob(Engine *e, std::string filename, int x, int y) : Entity(e,x,y), Drawable(filename){
+Mob::Mob(Engine *e, std::vector<std::string> &filenames, int x, int y) : Entity(e,x,y), Drawable(filenames){
 	dest = v2f(0,0);
 	moving = false;
 	speed = 1.0f;

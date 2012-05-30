@@ -1,10 +1,10 @@
 #include "Player.h"
 #include "SceneManager.h"
 
-Player::Player(Engine *e, std::string filename, int x, int y){
+Player::Player(Engine *e, std::vector<std::string> &filenames, int x, int y){
 
 	score = 0;
-	avatar = new Avatar(e, filename, x, y);
+	avatar = new Avatar(e, filenames, x, y);
 	this->engine = e;
 	e->addEntity(avatar);
 	e->addCharacter(avatar);

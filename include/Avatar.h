@@ -7,7 +7,7 @@
 class Avatar : public Entity, public Drawable, public Moveable{
 	int health;
 public:
-	Avatar(Engine *e, std::string filename, int x=0, int y=0);
+	Avatar(Engine *e, std::vector<std::string> &filenames, int x=0, int y=0);
 	virtual bool translateX(int x);
 	virtual bool translateY(int y);
 	virtual void moveTo(int x, int y);

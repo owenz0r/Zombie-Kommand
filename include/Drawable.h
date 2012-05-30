@@ -5,12 +5,15 @@
 #include "Entity.h"
 
 class Drawable {
-	SDL_Surface *sprite;
+	std::vector<SDL_Surface*> *sprites;
+	int currentSprite;
 	
 public:
+	Drawable(std::vector<std::string> &filenames);
 	Drawable(std::string filename);
-	SDL_Surface *loadSprite( std::string filename );
+	std::vector<SDL_Surface*> *loadSprite( std::vector<std::string> &filenames );
 	SDL_Surface *getSprite();
+	void setSprite(int i);
 	virtual void Update(Uint32 time);
 };
 

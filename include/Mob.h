@@ -15,7 +15,7 @@ class Mob : public Entity, public Drawable, public Moveable {
 	mob_state current_state;
 	int awareness;
 public:
-	Mob(Engine *e, std::string filename, int x=0, int y=0);
+	Mob(Engine *e, std::vector<std::string> &filenames, int x=0, int y=0);
 	virtual bool translateX(int x);
 	virtual bool translateY(int y);
 	virtual void moveTo(int x, int y);

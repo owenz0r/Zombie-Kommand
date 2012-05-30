@@ -29,7 +29,9 @@ Engine::Engine(){
 	if( screen != NULL )
 		current_scene = new SceneManager(this, screen);
 
-	player = new Player(this, "C:\\dev\\games\\media\\guy.png", TILESIZE*10, TILESIZE*10);
+	std::vector<std::string> *filenames = new std::vector<std::string>();
+	filenames->push_back("C:\\dev\\games\\media\\guy.png");
+	player = new Player(this, *filenames, TILESIZE*10, TILESIZE*10);
 
 	srand( time(NULL) );
 
@@ -42,7 +44,10 @@ Engine::Engine(){
 		int y = rand() % current_scene->getLevel()->getSizeY();
 		
 		if( !level->tileAt(x,y)->isOccupied() && level->tileAt(x,y)->getType() != tile_type::impassable){
-			Mob* mob = new Mob(this, "C:\\dev\\games\\media\\zombie.png", TILESIZE*x, TILESIZE*y);
+			filenames = new std::vector<std::string>();
+			filenames->push_back("C:\\dev\\games\\media\\zombie_idle.png");
+			filenames->push_back("C:\\dev\\games\\media\\zombie_seek.png");
+			Mob* mob = new Mob(this, *filenames, TILESIZE*x, TILESIZE*y);
 			level->tileAt(x,y)->addOccupant(mob);
 			mobs.push_back( mob );
 		}

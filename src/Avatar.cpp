@@ -1,7 +1,7 @@
 #include "Avatar.h"
 #include "SceneManager.h"
 
-Avatar::Avatar(Engine *e, std::string filename, int x, int y) : Entity(e,x,y), Drawable(filename){
+Avatar::Avatar(Engine *e, std::vector<std::string> &filenames, int x, int y) : Entity(e,x,y), Drawable(filenames){
 	dest = v2f(0,0);
 	moving = false;
 	speed = 3.0f;
