@@ -79,10 +79,10 @@ void Mob::seekBehavior(Uint32 time, Avatar *closest, float closestDist){
 
 	// only chase if character is within awareness range
 	v2f toTarget = v2f(0,0);
-	if( closestDist < TILESIZE*this->awareness ){
-		toTarget = closestPos - pos;
-		toTarget = toTarget.normalize();
-	}
+	//if( closestDist < TILESIZE*this->awareness ){
+	toTarget = closestPos - pos;
+	toTarget = toTarget.normalize();
+	//}
 
 	//////
 	// check surrounding area for other mobs
@@ -186,16 +186,22 @@ void Mob::Update(Uint32 time){
 		Avatar* closest = this->getClosestAvatar();
 		float closestDist = this->distanceTo(closest);
 
+		// we want zombies to keep chasing further than their original awareness
+		// range after theyve spotted you (twice as far in this case)
+		float awarenessRange = TILESIZE*this->awareness;
+		if( current_state == mob_state::seek )
+			awarenessRange *= 2;
+
 		// check awareness range and vision
-		if( closestDist < (TILESIZE*this->awareness) && this->canSee(closest) ){
-			this->current_state = seek;
+		if( closestDist < awarenessRange && this->canSee(closest) ){
+			this->current_state = mob_state::seek;
 		} else {
-			this->current_state = wander;
+			this->current_state = mob_state::wander;
 		}
 
 		switch(current_state){
-			case seek : seekBehavior(time, closest, closestDist);break;
-			case wander : wanderBehavior(time);break;
+			case seek : seekBehavior(time, closest, closestDist); this->setSprite(1);break;
+			case wander : wanderBehavior(time); this->setSprite(0);break;
 		}
 
 	}

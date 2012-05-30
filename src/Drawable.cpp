@@ -62,7 +62,7 @@ void Drawable::Update(Uint32 time){
 }
 
 void Drawable::setSprite(int i){
-	if( i > 0 && i < this->sprites->size() ){
+	if( i >= 0 && i < this->sprites->size() ){
 		currentSprite = i;
 	} else {
 		std::cout << "BAD SPRITE NUMBER" << std::endl;
