@@ -1,7 +1,9 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+//#include "globals.h"
 #include "Engine.h"
+//class Engine;
 
 class Entity{
 protected:

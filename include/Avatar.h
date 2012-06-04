@@ -3,6 +3,7 @@
 
 #include "Drawable.h"
 #include "Moveable.h"
+#include "Entity.h"
 
 class Avatar : public Entity, public Drawable, public Moveable{
 	int health;

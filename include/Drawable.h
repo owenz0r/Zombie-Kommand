@@ -2,7 +2,9 @@
 #define DRAWABLE_H
 
 #include <string>
-#include "Entity.h"
+#include <vector>
+#include "SDL.h"
+//#include "Entity.h"
 
 class Drawable {
 	std::vector<SDL_Surface*> *sprites;

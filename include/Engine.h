@@ -3,6 +3,8 @@
 
 #include "SDL.h"
 #include "globals.h"
+//#include "Drawable.h"
+#include "Pointer.h"
 #include <vector>
 
 // forward declarations
@@ -24,6 +26,7 @@ class Engine{
 	Entity *entities[MAXENTITIES];
 	int num_entities;
 	int num_characters;
+	Pointer *pointer;
 
 	
 public:

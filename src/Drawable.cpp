@@ -1,5 +1,6 @@
 #include "Drawable.h"
 #include "SDL_image.h"
+#include <iostream>
 
 Drawable::Drawable(std::vector<std::string> &filenames) {
 

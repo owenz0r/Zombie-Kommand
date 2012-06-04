@@ -52,7 +52,11 @@ Engine::Engine(){
 			mobs.push_back( mob );
 		}
 	}
-	
+	SDL_ShowCursor(0);
+
+	filenames = new std::vector<std::string>();
+	filenames->push_back("C:\\dev\\games\\media\\target.png");
+	//pointer = new Pointer(new v2f(0,0), filenames);
 }
 
 void Engine::Shutdown(){
@@ -77,6 +81,8 @@ void Engine::Run(){
 	Uint32 currentT = SDL_GetTicks();
 	Uint32 deltaT = 0;
 
+	int x,y;
+
 	running = true;
 	while( running == true )
     {
@@ -99,6 +105,13 @@ void Engine::Run(){
             {
 				player->keyPressed(current_event);
             }
+
+			if( current_event.type == SDL_MOUSEMOTION )
+			{
+				//Get the mouse offsets
+				x = current_event.motion.x;
+				y = current_event.motion.y;
+			}
         }
 
 		current_scene->getViewport()->Update(deltaT);
@@ -112,7 +125,7 @@ void Engine::Run(){
 		for(int i=0; i < mobs.size(); i++)
 			current_scene->drawMob(mobs[i]);
 
-		//setPixel(screen, 5, 5, 0, 255, 0);
+		setPixel(screen, x, y, 0, 255, 0);
 		//drawLine(screen, 0,0,200,200);
 
 		//current_scene->getLevel()->processEdges(this->screen, &current_scene->getViewport()->getBasePosition());

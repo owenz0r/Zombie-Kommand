@@ -3,6 +3,7 @@
 
 #include "Drawable.h"
 #include "Moveable.h"
+#include "Entity.h"
 
 enum mob_state{
 	seek,
