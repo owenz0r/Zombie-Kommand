@@ -33,7 +33,7 @@ std::vector<SDL_Surface*> *Drawable::loadSprite( std::vector<std::string> &filen
 		if( loadedImage != NULL )
 		{
 			//Create an optimized image
-			optimizedImage = SDL_DisplayFormat( loadedImage );
+			optimizedImage = SDL_DisplayFormatAlpha( loadedImage );
 	        
 			//Free the old image
 			SDL_FreeSurface( loadedImage );

@@ -29,9 +29,12 @@ void SceneManager::drawPlayer(Player *player){
 void SceneManager::drawMob(Mob *mob){
 	
 	applySurface(mob->getPos()[0] - viewport->getBasePosition()[0]*TILESIZE, mob->getPos()[1] - viewport->getBasePosition()[1]*TILESIZE, mob->getSprite());
+	
+	/* Debug seeking lines
 	if( mob->getCurrentState() == mob_state::seek ){
 		drawLine(this->engine->getScreen(),mob->getPos()[0]+(TILESIZE/2),mob->getPos()[1]+(TILESIZE/2),mob->getClosestAvatar()->getPos()[0]+(TILESIZE/2),mob->getClosestAvatar()->getPos()[1]+(TILESIZE/2));
 	}
+	*/
 }
 
 void SceneManager::applySurface(v2f &pos, SDL_Surface *source)

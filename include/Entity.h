@@ -14,6 +14,7 @@ public:
 	Entity(Engine *e, int x=0, int y=0);
 	virtual void Update(Uint32 time) = 0;
 	v2f& getPos();
+	void setPos(float x, float y);
 	float distanceTo(Entity *other);
 };
 

@@ -15,3 +15,8 @@ float Entity::distanceTo(Entity *other){
 	v2f vec = other->pos - this->pos;
 	return vec.length();
 }
+
+void Entity::setPos(float x, float y){
+	this->pos[0] = x;
+	this->pos[1] = y;
+}

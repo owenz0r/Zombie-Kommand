@@ -10,6 +10,7 @@
 #include "Level.h"
 #include "Tile.h"
 #include "Viewport.h"
+#include "Pointer.h"
 
 // TEMPORARY HOLDING //
 int xpos = 20;
@@ -59,7 +60,7 @@ Engine::Engine(){
 
 	filenames = new std::vector<std::string>();
 	filenames->push_back("C:\\dev\\games\\media\\target.png");
-	//pointer = new Pointer(this, new v2f(0,0), *filenames);
+	pointer = new Pointer(this, new v2f(0,0), *filenames);
 }
 
 void Engine::Shutdown(){
@@ -114,6 +115,7 @@ void Engine::Run(){
 				//Get the mouse offsets
 				x = current_event.motion.x;
 				y = current_event.motion.y;
+				pointer->setPos((float)x,(float)y);
 			}
         }
 
@@ -128,7 +130,10 @@ void Engine::Run(){
 		for(int i=0; i < mobs.size(); i++)
 			current_scene->drawMob(mobs[i]);
 
-		setPixel(screen, x, y, 0, 255, 0);
+		// pointer
+		current_scene->applySurface(pointer->getPos()[0] - current_scene->getViewport()->getBasePosition()[0]*TILESIZE, 
+						pointer->getPos()[1] - current_scene->getViewport()->getBasePosition()[1]*TILESIZE, pointer->getSprite());
+		//setPixel(screen, x, y, 0, 255, 0);
 		//drawLine(screen, 0,0,200,200);
 
 		//current_scene->getLevel()->processEdges(this->screen, &current_scene->getViewport()->getBasePosition());
