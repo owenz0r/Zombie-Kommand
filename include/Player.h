@@ -1,11 +1,11 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-//#include "Avatar.h"
-class Avatar;
-class Engine;
 #include <vector>
 #include <SDL.h>
+
+class Avatar;
+class Engine;
 
 class Player{
 	Avatar *avatar;

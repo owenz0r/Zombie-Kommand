@@ -3,11 +3,8 @@
 
 #include "SDL.h"
 #include "globals.h"
-//#include "Drawable.h"
-//#include "Pointer.h"
 #include <vector>
 
-// forward declarations
 class SceneManager;
 class Player;
 class Entity;

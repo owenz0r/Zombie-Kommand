@@ -3,10 +3,6 @@
 
 #include "Entity.h"
 #include "Drawable.h"
-//#include "globals.h"
-
-//class Drawable;
-//class Entity;
 
 class Pointer : public Drawable, public Entity {
 

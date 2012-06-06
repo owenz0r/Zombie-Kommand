@@ -2,14 +2,8 @@
 #define LEVEL_H
 
 #include <string>
-//#include "Tile.h"
-
 #include <SDL.h>
-
-#include "cml_config.h"
-#include <cml/cml.h>
-typedef cml::vector< float, cml::fixed<2> > v2f;
-
+#include "globals.h"
 
 class Tile;
 

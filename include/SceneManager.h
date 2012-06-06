@@ -3,12 +3,6 @@
 
 #include "SDL.h"
 #include "globals.h"
-
-//#include "Drawable.h"
-//#include "Level.h"
-//#include "Mob.h"
-//#include "Viewport.h"
-//#include "Player.h"
 #include <string>
 
 class Engine;
@@ -18,10 +12,6 @@ class Viewport;
 class Player;
 class Mob;
 class Moveable;
-
-#include "cml_config.h"
-#include <cml/cml.h>
-typedef cml::vector< float, cml::fixed<2> > v2f;
 
 class SceneManager{
 	Engine *engine;
