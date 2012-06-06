@@ -7,6 +7,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "Level.h"
+#include "Tile.h"
+#include "Viewport.h"
 
 // TEMPORARY HOLDING //
 int xpos = 20;
@@ -56,7 +59,7 @@ Engine::Engine(){
 
 	filenames = new std::vector<std::string>();
 	filenames->push_back("C:\\dev\\games\\media\\target.png");
-	//pointer = new Pointer(new v2f(0,0), filenames);
+	//pointer = new Pointer(this, new v2f(0,0), *filenames);
 }
 
 void Engine::Shutdown(){

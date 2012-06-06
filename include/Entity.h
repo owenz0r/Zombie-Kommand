@@ -2,8 +2,14 @@
 #define ENTITY_H
 
 //#include "globals.h"
-#include "Engine.h"
-//class Engine;
+//#include "Engine.h"
+class Engine;
+
+#include "cml_config.h"
+#include <cml/cml.h>
+typedef cml::vector< float, cml::fixed<2> > v2f;
+
+#include <SDL.h>
 
 class Entity{
 protected:

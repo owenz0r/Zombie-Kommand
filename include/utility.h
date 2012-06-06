@@ -1,3 +1,5 @@
+#include "globals.h"
+
 // modified version from -
 // http://www.friedspace.com/cprogramming/SDLTest.c
 static void setPixel(SDL_Surface *screen, int x, int y, Uint8 r, Uint8 g, Uint8 b)

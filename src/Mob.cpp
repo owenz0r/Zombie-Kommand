@@ -6,6 +6,9 @@
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
+#include "Engine.h"
+#include "Level.h"
+#include "Tile.h"
 
 
 Mob::Mob(Engine *e, std::vector<std::string> &filenames, int x, int y) : Entity(e,x,y), Drawable(filenames){

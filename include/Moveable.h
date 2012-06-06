@@ -2,6 +2,10 @@
 #define MOVEABLE_H
 #include "globals.h"
 
+#include "cml_config.h"
+#include <cml/cml.h>
+typedef cml::vector< float, cml::fixed<2> > v2f;
+
 class Moveable {
 
 protected:

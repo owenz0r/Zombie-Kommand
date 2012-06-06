@@ -1,5 +1,10 @@
 #include "Player.h"
 #include "SceneManager.h"
+#include "Engine.h"
+#include "Avatar.h"
+#include "Level.h"
+#include "Tile.h"
+#include "Viewport.h"
 
 Player::Player(Engine *e, std::vector<std::string> &filenames, int x, int y){
 

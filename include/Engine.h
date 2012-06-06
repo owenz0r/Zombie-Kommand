@@ -4,7 +4,7 @@
 #include "SDL.h"
 #include "globals.h"
 //#include "Drawable.h"
-#include "Pointer.h"
+//#include "Pointer.h"
 #include <vector>
 
 // forward declarations
@@ -13,6 +13,7 @@ class Player;
 class Entity;
 class Avatar;
 class Mob;
+class Pointer;
 
 class Engine{
 	bool running;

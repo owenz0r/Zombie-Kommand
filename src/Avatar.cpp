@@ -1,5 +1,6 @@
 #include "Avatar.h"
 #include "SceneManager.h"
+#include "Engine.h"
 
 Avatar::Avatar(Engine *e, std::vector<std::string> &filenames, int x, int y) : Entity(e,x,y), Drawable(filenames){
 	dest = v2f(0,0);

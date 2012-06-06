@@ -5,6 +5,8 @@
 #include "Moveable.h"
 #include "Entity.h"
 
+class Avatar;
+
 enum mob_state{
 	seek,
 	wander

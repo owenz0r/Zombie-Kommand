@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Level.h"
 #include "Utility.h"
+#include "Tile.h"
 
 using namespace std;
 

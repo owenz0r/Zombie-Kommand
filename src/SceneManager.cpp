@@ -6,6 +6,9 @@
 #include "globals.h"
 #include "Utility.h"
 #include <fstream>
+#include "Engine.h"
+#include "Level.h"
+#include "Viewport.h"
 
 SceneManager::SceneManager(Engine *e, SDL_Surface *s){
 
